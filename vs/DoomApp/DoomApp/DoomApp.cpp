@@ -2,10 +2,19 @@
 //
 
 #include "stdafx.h"
+#include "Wrapper.h"
 
+#include <windows.h>
 
 int main()
 {
+	char *argv[] = {
+		"DoomApp.exe"
+	};
+
+	int argc = ARRAYSIZE(argv);
+
+	mainWrapper(argv, argc);
+
     return 0;
 }
-

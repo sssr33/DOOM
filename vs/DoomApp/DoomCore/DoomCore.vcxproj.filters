@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="linuxdoom">
+      <UniqueIdentifier>{83ab9138-6746-496c-8561-eb4bca7049da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="linuxdoom\compat">
+      <UniqueIdentifier>{914c514e-e57a-4847-ae30-dc74f16eaccb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\am_map.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\d_items.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\d_main.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\d_net.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\doomdef.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\doomstat.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\dstrings.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\f_finale.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\f_wipe.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\g_game.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\hu_lib.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\hu_stuff.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\i_main.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\i_net.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\i_sound.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\i_system.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\i_video.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\info.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\m_argv.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\m_bbox.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\m_cheat.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\m_fixed.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\m_menu.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\m_misc.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\m_random.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\m_swap.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_ceilng.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_doors.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_enemy.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_floor.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_inter.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_lights.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_map.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_maputl.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_mobj.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_plats.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_pspr.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_saveg.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_setup.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_sight.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_spec.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_switch.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_telept.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_tick.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\p_user.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\r_bsp.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\r_data.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\r_draw.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\r_main.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\r_plane.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\r_segs.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\r_sky.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\r_things.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\s_sound.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\sounds.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\st_lib.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\st_stuff.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\tables.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\v_video.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\w_wad.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\wi_stuff.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\z_zone.c">
+      <Filter>linuxdoom</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\am_map.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\d_englsh.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\d_event.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\d_french.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\d_items.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\d_main.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\d_net.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\d_player.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\d_textur.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\d_think.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\d_ticcmd.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\doomdata.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\doomdef.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\doomstat.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\doomtype.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\dstrings.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\f_finale.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\f_wipe.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\g_game.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\hu_lib.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\hu_stuff.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\i_net.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\i_sound.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\i_system.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\i_video.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\info.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\m_argv.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\m_bbox.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\m_cheat.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\m_fixed.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\m_menu.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\m_misc.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\m_random.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\m_swap.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\p_inter.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\p_local.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\p_mobj.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\p_pspr.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\p_saveg.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\p_setup.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\p_spec.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\p_tick.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\r_bsp.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\r_data.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\r_defs.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\r_draw.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\r_local.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\r_main.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\r_plane.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\r_segs.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\r_sky.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\r_state.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\r_things.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\s_sound.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\sounds.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\st_lib.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\st_stuff.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\tables.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\v_video.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\w_wad.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\wi_stuff.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\z_zone.h">
+      <Filter>linuxdoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\compat\compat.h">
+      <Filter>linuxdoom\compat</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

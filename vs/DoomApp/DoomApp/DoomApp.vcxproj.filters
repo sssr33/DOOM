@@ -6,9 +6,11 @@
   <ItemGroup>
     <ClInclude Include="targetver.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Wrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="DoomApp.cpp" />
+    <ClCompile Include="Wrapper.cpp" />
   </ItemGroup>
 </Project>
