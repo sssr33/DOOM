@@ -38,7 +38,7 @@ typedef unsigned char byte;
 
 
 // Predefined with some OS.
-#ifdef LINUX
+#if defined(LINUX) || defined(WIN32)
 #include <values.h>
 #else
 #define MAXCHAR		((char)0x7f)

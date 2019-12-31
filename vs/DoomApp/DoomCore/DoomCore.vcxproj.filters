@@ -416,5 +416,14 @@
     <ClInclude Include="compat\usleep.h">
       <Filter>linuxdoom\compat</Filter>
     </ClInclude>
+    <ClInclude Include="compat\values.h">
+      <Filter>linuxdoom\compat</Filter>
+    </ClInclude>
+    <ClInclude Include="compat\features.h">
+      <Filter>linuxdoom\compat</Filter>
+    </ClInclude>
+    <ClInclude Include="compat\alloca.h">
+      <Filter>linuxdoom\compat</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

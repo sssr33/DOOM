@@ -65,6 +65,7 @@ void**			lumpcache;
 
 
 #define strcmpi	strcasecmp
+#define strupr strupr2
 
 void strupr (char* s)
 {
