@@ -201,12 +201,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\linuxdoom-1.10\i_net.c" />
-    <ClCompile Include="..\..\..\linuxdoom-1.10\i_sound.c">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\i_sound.c" />
     <ClCompile Include="..\..\..\linuxdoom-1.10\i_system.c" />
     <ClCompile Include="..\..\..\linuxdoom-1.10\i_video.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -313,12 +308,7 @@
     <ClInclude Include="..\..\..\linuxdoom-1.10\hu_stuff.h" />
     <ClInclude Include="..\..\..\linuxdoom-1.10\info.h" />
     <ClInclude Include="..\..\..\linuxdoom-1.10\i_net.h" />
-    <ClInclude Include="..\..\..\linuxdoom-1.10\i_sound.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\i_sound.h" />
     <ClInclude Include="..\..\..\linuxdoom-1.10\i_system.h" />
     <ClInclude Include="..\..\..\linuxdoom-1.10\i_video.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
