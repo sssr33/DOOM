@@ -13,6 +13,12 @@
     <Filter Include="linuxdoom\compat\sys">
       <UniqueIdentifier>{11762aad-91d0-4076-a60b-f409e6ac9df4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="linuxdoom\compat\netinet">
+      <UniqueIdentifier>{8dd288f7-eca6-449d-a26a-adc3aec824bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="linuxdoom\compat\arpa">
+      <UniqueIdentifier>{3bf3fb5e-d6c8-417b-8882-da67a575c4b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\linuxdoom-1.10\am_map.c">
@@ -424,6 +430,21 @@
     </ClInclude>
     <ClInclude Include="compat\alloca.h">
       <Filter>linuxdoom\compat</Filter>
+    </ClInclude>
+    <ClInclude Include="compat\sys\socket.h">
+      <Filter>linuxdoom\compat\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="compat\sys\ioctl.h">
+      <Filter>linuxdoom\compat\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="compat\netdb.h">
+      <Filter>linuxdoom\compat</Filter>
+    </ClInclude>
+    <ClInclude Include="compat\arpa\inet.h">
+      <Filter>linuxdoom\compat\arpa</Filter>
+    </ClInclude>
+    <ClInclude Include="compat\netinet\in.h">
+      <Filter>linuxdoom\compat\netinet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

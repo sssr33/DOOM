@@ -200,12 +200,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\linuxdoom-1.10\i_net.c">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\..\linuxdoom-1.10\i_net.c" />
     <ClCompile Include="..\..\..\linuxdoom-1.10\i_sound.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -317,12 +312,7 @@
     <ClInclude Include="..\..\..\linuxdoom-1.10\hu_lib.h" />
     <ClInclude Include="..\..\..\linuxdoom-1.10\hu_stuff.h" />
     <ClInclude Include="..\..\..\linuxdoom-1.10\info.h" />
-    <ClInclude Include="..\..\..\linuxdoom-1.10\i_net.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="..\..\..\linuxdoom-1.10\i_net.h" />
     <ClInclude Include="..\..\..\linuxdoom-1.10\i_sound.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -382,9 +372,14 @@
     <ClInclude Include="..\..\..\linuxdoom-1.10\w_wad.h" />
     <ClInclude Include="..\..\..\linuxdoom-1.10\z_zone.h" />
     <ClInclude Include="compat\alloca.h" />
+    <ClInclude Include="compat\arpa\inet.h" />
     <ClInclude Include="compat\compat.h" />
     <ClInclude Include="compat\features.h" />
     <ClInclude Include="compat\getopt.h" />
+    <ClInclude Include="compat\netdb.h" />
+    <ClInclude Include="compat\netinet\in.h" />
+    <ClInclude Include="compat\sys\ioctl.h" />
+    <ClInclude Include="compat\sys\socket.h" />
     <ClInclude Include="compat\sys\time.h" />
     <ClInclude Include="compat\tailor.h" />
     <ClInclude Include="compat\unistd.h" />
