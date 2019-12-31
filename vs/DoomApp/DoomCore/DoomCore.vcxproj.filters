@@ -386,7 +386,7 @@
     <ClInclude Include="..\..\..\linuxdoom-1.10\z_zone.h">
       <Filter>linuxdoom</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\linuxdoom-1.10\compat\compat.h">
+    <ClInclude Include="compat\compat.h">
       <Filter>linuxdoom\compat</Filter>
     </ClInclude>
   </ItemGroup>
