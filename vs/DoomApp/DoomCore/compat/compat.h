@@ -7,3 +7,5 @@
 #define strncasecmp _strnicmp
 #define strcasecmp _stricmp
 #endif
+
+#define NORMALUNIX 1

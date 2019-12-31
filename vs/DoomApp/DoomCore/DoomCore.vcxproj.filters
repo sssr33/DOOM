@@ -10,6 +10,9 @@
     <Filter Include="linuxdoom\compat">
       <UniqueIdentifier>{914c514e-e57a-4847-ae30-dc74f16eaccb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="linuxdoom\compat\sys">
+      <UniqueIdentifier>{11762aad-91d0-4076-a60b-f409e6ac9df4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\linuxdoom-1.10\am_map.c">
@@ -197,6 +200,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\linuxdoom-1.10\z_zone.c">
       <Filter>linuxdoom</Filter>
+    </ClCompile>
+    <ClCompile Include="compat\sys\sysTime.cpp">
+      <Filter>linuxdoom\compat\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="compat\getopt.c">
+      <Filter>linuxdoom\compat</Filter>
+    </ClCompile>
+    <ClCompile Include="compat\usleep.cpp">
+      <Filter>linuxdoom\compat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -387,6 +399,21 @@
       <Filter>linuxdoom</Filter>
     </ClInclude>
     <ClInclude Include="compat\compat.h">
+      <Filter>linuxdoom\compat</Filter>
+    </ClInclude>
+    <ClInclude Include="compat\sys\time.h">
+      <Filter>linuxdoom\compat\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="compat\unistd.h">
+      <Filter>linuxdoom\compat</Filter>
+    </ClInclude>
+    <ClInclude Include="compat\getopt.h">
+      <Filter>linuxdoom\compat</Filter>
+    </ClInclude>
+    <ClInclude Include="compat\tailor.h">
+      <Filter>linuxdoom\compat</Filter>
+    </ClInclude>
+    <ClInclude Include="compat\usleep.h">
       <Filter>linuxdoom\compat</Filter>
     </ClInclude>
   </ItemGroup>
