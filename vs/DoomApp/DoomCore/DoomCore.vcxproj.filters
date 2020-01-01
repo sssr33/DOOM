@@ -19,6 +19,9 @@
     <Filter Include="linuxdoom\compat\arpa">
       <UniqueIdentifier>{3bf3fb5e-d6c8-417b-8882-da67a575c4b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="linuxdoom\winExt">
+      <UniqueIdentifier>{5ecab850-fad8-4c6a-99f3-fe92536258f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\linuxdoom-1.10\am_map.c">
@@ -215,6 +218,12 @@
     </ClCompile>
     <ClCompile Include="compat\usleep.cpp">
       <Filter>linuxdoom\compat</Filter>
+    </ClCompile>
+    <ClCompile Include="winExt\WindowsGraphicsWnd.cpp">
+      <Filter>linuxdoom\winExt</Filter>
+    </ClCompile>
+    <ClCompile Include="winExt\i_video_graphics_wnd.c">
+      <Filter>linuxdoom\winExt</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +454,18 @@
     </ClInclude>
     <ClInclude Include="compat\netinet\in.h">
       <Filter>linuxdoom\compat\netinet</Filter>
+    </ClInclude>
+    <ClInclude Include="winExt\IGraphicsWnd.h">
+      <Filter>linuxdoom\winExt</Filter>
+    </ClInclude>
+    <ClInclude Include="winExt\WindowsGraphicsWnd.h">
+      <Filter>linuxdoom\winExt</Filter>
+    </ClInclude>
+    <ClInclude Include="winExt\IGraphicsWndInputEvent.h">
+      <Filter>linuxdoom\winExt</Filter>
+    </ClInclude>
+    <ClInclude Include="winExt\InterfaceBase.h">
+      <Filter>linuxdoom\winExt</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
