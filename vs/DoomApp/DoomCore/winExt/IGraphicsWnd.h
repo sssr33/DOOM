@@ -20,6 +20,18 @@ extern "C" {
         HRESULT(__stdcall* Release)(
             IGraphicsWnd* This);
 
+        HRESULT(__stdcall* InitializeScreen)(
+            IGraphicsWnd* This,
+            int width,
+            int height,
+            int bitDepth
+            );
+
+        HRESULT(__stdcall* GetCPUBackBuffer)(
+            IGraphicsWnd* This,
+            void** buffer
+            );
+
         HRESULT(__stdcall* TryGetNextInputEvent)(
             IGraphicsWnd* This,
             IGraphicsWndInputEvent** evt);

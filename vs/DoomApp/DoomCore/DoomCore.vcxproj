@@ -265,11 +265,12 @@
     <ClCompile Include="compat\getopt.c" />
     <ClCompile Include="compat\sys\sysTime.cpp" />
     <ClCompile Include="compat\usleep.cpp" />
+    <ClCompile Include="winExt\IGaphicsWndCreate.cpp" />
     <ClCompile Include="winExt\i_video_graphics_wnd.c">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="winExt\WindowsGraphicsWnd.cpp" />
   </ItemGroup>
@@ -377,6 +378,7 @@
     <ClInclude Include="compat\unistd.h" />
     <ClInclude Include="compat\usleep.h" />
     <ClInclude Include="compat\values.h" />
+    <ClInclude Include="winExt\IGaphicsWndCreate.h" />
     <ClInclude Include="winExt\IGraphicsWnd.h" />
     <ClInclude Include="winExt\IGraphicsWndInputEvent.h" />
     <ClInclude Include="winExt\InterfaceBase.h" />

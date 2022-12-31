@@ -225,6 +225,9 @@
     <ClCompile Include="winExt\i_video_graphics_wnd.c">
       <Filter>linuxdoom\winExt</Filter>
     </ClCompile>
+    <ClCompile Include="winExt\IGaphicsWndCreate.cpp">
+      <Filter>linuxdoom\winExt</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\linuxdoom-1.10\am_map.h">
@@ -465,6 +468,9 @@
       <Filter>linuxdoom\winExt</Filter>
     </ClInclude>
     <ClInclude Include="winExt\InterfaceBase.h">
+      <Filter>linuxdoom\winExt</Filter>
+    </ClInclude>
+    <ClInclude Include="winExt\IGaphicsWndCreate.h">
       <Filter>linuxdoom\winExt</Filter>
     </ClInclude>
   </ItemGroup>

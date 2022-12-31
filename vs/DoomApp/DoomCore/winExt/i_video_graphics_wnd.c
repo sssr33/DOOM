@@ -1,4 +1,4 @@
-#include "WindowsGraphicsWnd.h"
+#include "IGaphicsWndCreate.h"
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -23,29 +23,13 @@
 #define POINTER_WARP_COUNTDOWN	1
 
 IGraphicsWnd* graphicsWnd = NULL;
-
-//Display* X_display = 0;
-//Window		X_mainWindow;
-//Colormap	X_cmap;
-//Visual* X_visual;
-//GC		X_gc;
-//XEvent		X_event;
-int		X_screen;
-//XVisualInfo	X_visualinfo;
-//XImage* image;
-int		X_width;
-int		X_height;
-
-// MIT SHared Memory extension.
-//boolean		doShm;
-//
-//XShmSegmentInfo	X_shminfo;
-//int		X_shmeventtype;
+int		X_width = 0;
+int		X_height = 0;
 
 // Fake mouse handling.
 // This cannot work properly w/o DGA.
 // Needs an invisible mouse cursor at least.
-boolean		grabMouse;
+boolean		grabMouse = 0;
 int		doPointerWarp = POINTER_WARP_COUNTDOWN;
 
 // Blocky mode,
@@ -344,6 +328,7 @@ void I_FinishUpdate(void)
 	static int	lasttic;
 	int		tics;
 	int		i;
+	byte* imageData = NULL;
 	// UNUSED static unsigned char *bigscreen=0;
 
 	// draws little dots on the bottom of the screen
@@ -362,6 +347,15 @@ void I_FinishUpdate(void)
 
 	}
 
+	if (multiply != 1) {
+		HRESULT hr = S_OK;
+
+		hr = graphicsWnd->vtable->GetCPUBackBuffer(graphicsWnd, (void**)&imageData);
+		if (FAILED(hr)) {
+			I_Error("Failed to GetCPUBackBuffer");
+		}
+	}
+
 	// scales the screen size before blitting it
 	if (multiply == 2)
 	{
@@ -374,7 +368,7 @@ void I_FinishUpdate(void)
 
 		ilineptr = (unsigned int*)(screens[0]);
 		for (i = 0; i < 2; i++)
-			olineptrs[i] = (unsigned int*)&image->data[i * X_width];
+			olineptrs[i] = (unsigned int*)&imageData[i * X_width];
 
 		y = SCREENHEIGHT;
 		while (y--)
@@ -416,7 +410,7 @@ void I_FinishUpdate(void)
 
 		ilineptr = (unsigned int*)(screens[0]);
 		for (i = 0; i < 3; i++)
-			olineptrs[i] = (unsigned int*)&image->data[i * X_width];
+			olineptrs[i] = (unsigned int*)&imageData[i * X_width];
 
 		y = SCREENHEIGHT;
 		while (y--)
@@ -466,7 +460,7 @@ void I_FinishUpdate(void)
 	{
 		// Broken. Gotta fix this some day.
 		void Expand4(unsigned*, double*);
-		Expand4((unsigned*)(screens[0]), (double*)(image->data));
+		Expand4((unsigned*)(screens[0]), (double*)(imageData));
 	}
 
 	//if (doShm)
@@ -680,23 +674,23 @@ void I_SetPalette(byte* palette)
 
 void I_InitGraphics(void)
 {
-
-	char* displayname;
-	char* d;
-	int			n;
-	int			pnum;
-	int			x = 0;
-	int			y = 0;
+	HRESULT hr = S_OK;
+	int bitDepth = 8;
+	//char* displayname = 0;
+	char* graphicsImplName = 0;
+	char* d = 0;
+	//int			n = 0;
+	int			pnum = 0;
+	//int			x = 0;
+	//int			y = 0;
 
 	// warning: char format, different type arg
-	char		xsign = ' ';
-	char		ysign = ' ';
+	//char		xsign = ' ';
+	//char		ysign = ' ';
 
-	int			oktodraw;
-	unsigned long	attribmask;
-	XSetWindowAttributes attribs;
-	XGCValues		xgcvalues;
-	int			valuemask;
+	int			oktodraw = 0;
+	unsigned long	attribmask = 0;
+	int			valuemask = 0;
 	static int		firsttime = 1;
 
 	if (!firsttime)
@@ -704,6 +698,20 @@ void I_InitGraphics(void)
 	firsttime = 0;
 
 	signal(SIGINT, (void (*)(int)) I_Quit);
+
+	if ((pnum = M_CheckParm("-graphicsImplName"))) // get name to create graphics implementation
+	{
+		graphicsImplName = myargv[pnum + 1];
+		hr = CreateIGraphicsWnd(graphicsImplName, &graphicsWnd);
+
+		if (FAILED(hr)) {
+			I_Error("Failed to create graphics implementation [%s]", graphicsImplName);
+		}
+	}
+	else
+	{
+		I_Error("no -graphicsImplName parameter. Must set -graphicsImplName.");
+	}
 
 	if (M_CheckParm("-2"))
 		multiply = 2;
@@ -717,190 +725,27 @@ void I_InitGraphics(void)
 	X_width = SCREENWIDTH * multiply;
 	X_height = SCREENHEIGHT * multiply;
 
-	// check for command-line display name
-	if ((pnum = M_CheckParm("-disp"))) // suggest parentheses around assignment
-		displayname = myargv[pnum + 1];
-	else
-		displayname = 0;
-
 	// check if the user wants to grab the mouse (quite unnice)
 	grabMouse = !!M_CheckParm("-grabmouse");
 
-	// check for command-line geometry
-	if ((pnum = M_CheckParm("-geom"))) // suggest parentheses around assignment
-	{
-		// warning: char format, different type arg 3,5
-		n = sscanf(myargv[pnum + 1], "%c%d%c%d", &xsign, &x, &ysign, &y);
-
-		if (n == 2)
-			x = y = 0;
-		else if (n == 6)
-		{
-			if (xsign == '-')
-				x = -x;
-			if (ysign == '-')
-				y = -y;
-		}
-		else
-			I_Error("bad -geom parameter");
+	hr = graphicsWnd->vtable->InitializeScreen(graphicsWnd,
+		X_width,
+		X_height,
+		bitDepth
+	);
+	if (FAILED(hr)) {
+		I_Error("Failed to initialize graphics with width=[%d] height=[%d] bitDepth=[%d]", X_width, X_height, bitDepth);
 	}
 
-	// open the display
-	X_display = XOpenDisplay(displayname);
-	if (!X_display)
-	{
-		if (displayname)
-			I_Error("Could not open display [%s]", displayname);
-		else
-			I_Error("Could not open display (DISPLAY=[%s])", getenv("DISPLAY"));
-	}
-
-	// use the default visual 
-	X_screen = DefaultScreen(X_display);
-	if (!XMatchVisualInfo(X_display, X_screen, 8, PseudoColor, &X_visualinfo))
-		I_Error("xdoom currently only supports 256-color PseudoColor screens");
-	X_visual = X_visualinfo.visual;
-
-	// check for the MITSHM extension
-	doShm = XShmQueryExtension(X_display);
-
-	// even if it's available, make sure it's a local connection
-	if (doShm)
-	{
-		if (!displayname) displayname = (char*)getenv("DISPLAY");
-		if (displayname)
-		{
-			d = displayname;
-			while (*d && (*d != ':')) d++;
-			if (*d) *d = 0;
-			if (!(!strcasecmp(displayname, "unix") || !*displayname)) doShm = false;
+	if (multiply == 1) {
+		hr = graphicsWnd->vtable->GetCPUBackBuffer(graphicsWnd, (void**)&screens[0]);
+		if (FAILED(hr)) {
+			I_Error("Failed to GetCPUBackBuffer");
 		}
 	}
-
-	fprintf(stderr, "Using MITSHM extension\n");
-
-	// create the colormap
-	X_cmap = XCreateColormap(X_display, RootWindow(X_display,
-		X_screen), X_visual, AllocAll);
-
-	// setup attributes for main window
-	attribmask = CWEventMask | CWColormap | CWBorderPixel;
-	attribs.event_mask =
-		KeyPressMask
-		| KeyReleaseMask
-		// | PointerMotionMask | ButtonPressMask | ButtonReleaseMask
-		| ExposureMask;
-
-	attribs.colormap = X_cmap;
-	attribs.border_pixel = 0;
-
-	// create the main window
-	X_mainWindow = XCreateWindow(X_display,
-		RootWindow(X_display, X_screen),
-		x, y,
-		X_width, X_height,
-		0, // borderwidth
-		8, // depth
-		InputOutput,
-		X_visual,
-		attribmask,
-		&attribs);
-
-	XDefineCursor(X_display, X_mainWindow,
-		createnullcursor(X_display, X_mainWindow));
-
-	// create the GC
-	valuemask = GCGraphicsExposures;
-	xgcvalues.graphics_exposures = False;
-	X_gc = XCreateGC(X_display,
-		X_mainWindow,
-		valuemask,
-		&xgcvalues);
-
-	// map the window
-	XMapWindow(X_display, X_mainWindow);
-
-	// wait until it is OK to draw
-	oktodraw = 0;
-	while (!oktodraw)
-	{
-		XNextEvent(X_display, &X_event);
-		if (X_event.type == Expose
-			&& !X_event.xexpose.count)
-		{
-			oktodraw = 1;
-		}
-	}
-
-	// grabs the pointer so it is restricted to this window
-	if (grabMouse)
-		XGrabPointer(X_display, X_mainWindow, True,
-			ButtonPressMask | ButtonReleaseMask | PointerMotionMask,
-			GrabModeAsync, GrabModeAsync,
-			X_mainWindow, None, CurrentTime);
-
-	if (doShm)
-	{
-
-		X_shmeventtype = XShmGetEventBase(X_display) + ShmCompletion;
-
-		// create the image
-		image = XShmCreateImage(X_display,
-			X_visual,
-			8,
-			ZPixmap,
-			0,
-			&X_shminfo,
-			X_width,
-			X_height);
-
-		grabsharedmemory(image->bytes_per_line * image->height);
-
-
-		// UNUSED
-		// create the shared memory segment
-		// X_shminfo.shmid = shmget (IPC_PRIVATE,
-		// image->bytes_per_line * image->height, IPC_CREAT | 0777);
-		// if (X_shminfo.shmid < 0)
-		// {
-		// perror("");
-		// I_Error("shmget() failed in InitGraphics()");
-		// }
-		// fprintf(stderr, "shared memory id=%d\n", X_shminfo.shmid);
-		// attach to the shared memory segment
-		// image->data = X_shminfo.shmaddr = shmat(X_shminfo.shmid, 0, 0);
-
-
-		if (!image->data)
-		{
-			perror("");
-			I_Error("shmat() failed in InitGraphics()");
-		}
-
-		// get the X server to attach to it
-		if (!XShmAttach(X_display, &X_shminfo))
-			I_Error("XShmAttach() failed in InitGraphics()");
-
-	}
-	else
-	{
-		image = XCreateImage(X_display,
-			X_visual,
-			8,
-			ZPixmap,
-			0,
-			(char*)malloc(X_width * X_height),
-			X_width, X_height,
-			8,
-			X_width);
-
-	}
-
-	if (multiply == 1)
-		screens[0] = (unsigned char*)(image->data);
-	else
+	else {
 		screens[0] = (unsigned char*)malloc(SCREENWIDTH * SCREENHEIGHT);
-
+	}
 }
 
 
