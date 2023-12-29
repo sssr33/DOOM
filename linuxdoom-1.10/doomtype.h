@@ -27,6 +27,7 @@
 
 #ifndef __BYTEBOOL__
 #define __BYTEBOOL__
+#if !defined(_MSC_VER)
 // Fixed to use builtin bool type with C++.
 #ifdef __cplusplus
 typedef bool boolean;
@@ -34,12 +35,18 @@ typedef bool boolean;
 typedef enum {false, true} boolean;
 #endif
 typedef unsigned char byte;
+#else
+#include <stdbool.h>
+#include <stdint.h>
+#endif
 #endif
 
 
 // Predefined with some OS.
-#if defined(LINUX) || defined(WIN32)
+#if defined(LINUX) || (defined(WIN32) && !defined(_MSC_VER))
 #include <values.h>
+#elif defined(_MSC_VER)
+#include <windowsSafe.h>
 #else
 #define MAXCHAR		((char)0x7f)
 #define MAXSHORT	((short)0x7fff)

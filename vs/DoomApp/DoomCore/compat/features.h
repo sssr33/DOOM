@@ -16,11 +16,8 @@
 #ifndef	_FEATURES_H
 #define	_FEATURES_H	1
 
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
+#include <windowsSafe.h>
 #include <malloc.h>
-
-#undef LoadMenu
 
    /* These are defined by the user (or the compiler)
       to specify the desired environment:

@@ -1,6 +1,6 @@
 #include "time.h"
 
-#include <Windows.h>
+#include <windowsSafe.h>
 
 int gettimeofday(struct timeval* tv, struct timezone* tz)
 {

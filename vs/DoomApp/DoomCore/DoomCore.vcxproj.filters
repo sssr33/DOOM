@@ -473,5 +473,8 @@
     <ClInclude Include="winExt\IGaphicsWndCreate.h">
       <Filter>linuxdoom\winExt</Filter>
     </ClInclude>
+    <ClInclude Include="compat\windowsSafe.h">
+      <Filter>linuxdoom\compat</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
