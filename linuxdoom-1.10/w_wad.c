@@ -35,7 +35,9 @@ rcsid[] = "$Id: w_wad.c,v 1.5 1997/02/03 16:47:57 b1 Exp $";
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <alloca.h>
-#define O_BINARY		0
+#ifndef O_BINARY
+#define O_BINARY 0
+#endif
 #endif
 
 #include "doomtype.h"
@@ -72,6 +74,7 @@ void strupr (char* s)
     while (*s) { *s = toupper(*s); s++; }
 }
 
+#if !defined(_MSC_VER)
 int filelength (int handle) 
 { 
     struct stat	fileinfo;
@@ -81,6 +84,7 @@ int filelength (int handle)
 
     return fileinfo.st_size;
 }
+#endif
 
 
 void

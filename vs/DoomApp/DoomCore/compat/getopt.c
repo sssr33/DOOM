@@ -37,6 +37,10 @@
 #include <stdio.h>
 #include "tailor.h"
 
+#if defined(_MSC_VER)
+#include <stdlib.h>
+#endif
+
 /* Comment out all this code if we are using the GNU C Library, and are not
    actually compiling the library itself.  This code is part of the GNU C
    Library, but also included in many other GNU distributions.  Compiling
@@ -170,6 +174,7 @@ static enum
 /* Avoid depending on library functions or files
    whose names are inconsistent.  */
 
+#if !defined(_MSC_VER)
 #if __STDC__ || defined(PROTO)
 extern char *getenv(const char *name);
 extern int  strcmp (const char *s1, const char *s2);
@@ -179,6 +184,7 @@ static int my_strlen(const char *s);
 static char *my_index (const char *str, int chr);
 #else
 extern char *getenv ();
+#endif
 #endif
 
 static int
