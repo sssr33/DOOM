@@ -62,8 +62,8 @@ typedef unsigned char byte;
 #define MINLONG		((long)0x80000000)
 #endif
 
-
-
+// signed boolean to safely compare with -1, < 0
+typedef char sboolean;
 
 #endif
 //-----------------------------------------------------------------------------
