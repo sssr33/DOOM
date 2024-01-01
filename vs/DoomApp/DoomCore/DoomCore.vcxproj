@@ -385,8 +385,10 @@
     <ClInclude Include="compat\windowsSafe.h" />
     <ClInclude Include="winExt\IGaphicsWndCreate.h" />
     <ClInclude Include="winExt\IGraphicsWnd.h" />
+    <ClInclude Include="winExt\IGraphicsWndFactory.h" />
     <ClInclude Include="winExt\IGraphicsWndInputEvent.h" />
     <ClInclude Include="winExt\InterfaceBase.h" />
+    <ClInclude Include="winExt\InterfacePtr.h" />
     <ClInclude Include="winExt\WindowsGraphicsWnd.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

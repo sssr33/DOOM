@@ -476,5 +476,9 @@
     <ClInclude Include="compat\windowsSafe.h">
       <Filter>linuxdoom\compat</Filter>
     </ClInclude>
+    <ClInclude Include="winExt\IGraphicsWndFactory.h">
+      <Filter>linuxdoom\winExt</Filter>
+    </ClInclude>
+    <ClInclude Include="winExt\InterfacePtr.h" />
   </ItemGroup>
 </Project>

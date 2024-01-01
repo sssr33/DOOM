@@ -14,10 +14,10 @@ extern "C" {
             const IID* riid,
             void** ppvObject);
 
-        HRESULT(__stdcall* AddRef)(
+        ULONG(__stdcall* AddRef)(
             IGraphicsWnd* This);
 
-        HRESULT(__stdcall* Release)(
+        ULONG(__stdcall* Release)(
             IGraphicsWnd* This);
 
         HRESULT(__stdcall* InitializeScreen)(
@@ -31,6 +31,9 @@ extern "C" {
             IGraphicsWnd* This,
             void** buffer
             );
+
+        HRESULT(__stdcall* FinishScreenUpdate)(
+            IGraphicsWnd* This);
 
         HRESULT(__stdcall* TryGetNextInputEvent)(
             IGraphicsWnd* This,

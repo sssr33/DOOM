@@ -1,6 +1,7 @@
 #pragma once
 
 // DOOM defines SHORT and LONG as macros so push/pop them to fix warnings
+// https://stackoverflow.com/questions/44441892/restoring-definitions-and-macros
 #if defined(SHORT)
 #pragma push_macro("SHORT")
 #define RESTORE_SHORT

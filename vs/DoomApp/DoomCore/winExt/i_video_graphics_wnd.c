@@ -109,13 +109,14 @@ void I_ShutdownGraphics(void)
 	//// Paranoia.
 	//image->data = NULL;
 
-	HRESULT hr = S_OK;
+	if (graphicsWnd) {
+		HRESULT hr = S_OK;
 
-	assert(graphicsWnd);
-
-	hr = graphicsWnd->vtable->Release(graphicsWnd);
-	if (FAILED(hr)) {
-		I_Error("graphicsWnd.Release failed");
+		hr = graphicsWnd->vtable->Release(graphicsWnd);
+		if (FAILED(hr)) {
+			I_Error("graphicsWnd.Release failed");
+		}
+		graphicsWnd = NULL;
 	}
 }
 
@@ -250,8 +251,12 @@ HRESULT I_GetEvent_impl(IGraphicsWndInputEvent** inputEvt, const char** errStr, 
 		}
 		break;
 	default:
+		// not handled event
+		assert(false);
 		break;
 	}
+
+	*res = true;
 
 	return S_OK;
 }
@@ -281,6 +286,7 @@ boolean I_GetEvent(void)
 //
 void I_StartTic(void)
 {
+	while (I_GetEvent());
 
 	//if (!X_display)
 	//	return;
@@ -329,6 +335,7 @@ void I_FinishUpdate(void)
 	int		tics;
 	int		i;
 	byte* imageData = NULL;
+	HRESULT hr = S_OK;
 	// UNUSED static unsigned char *bigscreen=0;
 
 	// draws little dots on the bottom of the screen
@@ -348,8 +355,6 @@ void I_FinishUpdate(void)
 	}
 
 	if (multiply != 1) {
-		HRESULT hr = S_OK;
-
 		hr = graphicsWnd->vtable->GetCPUBackBuffer(graphicsWnd, (void**)&imageData);
 		if (FAILED(hr)) {
 			I_Error("Failed to GetCPUBackBuffer");
@@ -463,6 +468,11 @@ void I_FinishUpdate(void)
 		Expand4((unsigned*)(screens[0]), (double*)(imageData));
 	}
 
+	hr = graphicsWnd->vtable->FinishScreenUpdate(graphicsWnd);
+	if (FAILED(hr)) {
+		I_Error("Failed to FinishScreenUpdate");
+	}
+
 	//if (doShm)
 	//{
 
@@ -564,6 +574,7 @@ void I_ReadScreen(byte* scr)
 //
 void I_SetPalette(byte* palette)
 {
+	assert(false);
 	//UploadNewPalette(X_cmap, palette);
 }
 

@@ -7,10 +7,14 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Wrapper.h" />
+    <ClInclude Include="Dx11GraphicsWndFactory.h" />
+    <ClInclude Include="Dx11GraphicsWnd.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="DoomApp.cpp" />
     <ClCompile Include="Wrapper.cpp" />
+    <ClCompile Include="Dx11GraphicsWndFactory.cpp" />
+    <ClCompile Include="Dx11GraphicsWnd.cpp" />
   </ItemGroup>
 </Project>
