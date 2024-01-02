@@ -9,6 +9,7 @@
     <ClInclude Include="Wrapper.h" />
     <ClInclude Include="Dx11GraphicsWndFactory.h" />
     <ClInclude Include="Dx11GraphicsWnd.h" />
+    <ClInclude Include="vtable_bind.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

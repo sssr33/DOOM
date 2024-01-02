@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Dx11GraphicsWndFactory.h"
 #include "Dx11GraphicsWnd.h"
+#include "vtable_bind.h"
 
 const std::string Dx11GraphicsWndFactory::GraphicsImplName = "dx11_win";
 
@@ -59,31 +60,6 @@ IGraphicsWndFactoryVtbl* Dx11GraphicsWndFactory::VTable::GetVTable() {
 }
 
 Dx11GraphicsWndFactory::VTable::VTable() {
-    this->vtable.QueryInterface = [](
-        IGraphicsWndFactory* This,
-        const IID* riid,
-        void** ppvObject)
-    {
-        auto tmp = static_cast<Dx11GraphicsWndFactory*>(This);
-        return tmp->QueryInterface(riid, ppvObject);
-    };
-
-    this->vtable.AddRef = [](IGraphicsWndFactory* This)
-    {
-        auto tmp = static_cast<Dx11GraphicsWndFactory*>(This);
-        return tmp->AddRef();
-    };
-
-    this->vtable.Release = [](IGraphicsWndFactory* This)
-    {
-        auto tmp = static_cast<Dx11GraphicsWndFactory*>(This);
-        return tmp->Release();
-    };
-
-    this->vtable.CreateGraphicsWnd = [](
-        IGraphicsWndFactory* This, const char* implName, IGraphicsWnd** res)
-    {
-        auto tmp = static_cast<Dx11GraphicsWndFactory*>(This);
-        return tmp->CreateGraphicsWnd(implName, res);
-    };
+    vtable_bind_base<Dx11GraphicsWndFactory>(this->vtable);
+    vtable_bind<&Dx11GraphicsWndFactory::CreateGraphicsWnd>(this->vtable.CreateGraphicsWnd);
 }
