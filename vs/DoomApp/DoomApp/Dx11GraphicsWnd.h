@@ -1,6 +1,8 @@
 #pragma once
 
 #include <atomic>
+#include <vector>
+#include <cstdint>
 #include <winExt\InterfacePtr.h>
 #include <winExt\IGraphicsWnd.h>
 
@@ -26,6 +28,12 @@ public:
         void** buffer
         );
 
+    HRESULT __stdcall SetPalette(
+        const uint8_t* paletteIndexes,
+        const uint8_t* paletteColors,
+        uint32_t paletteSize
+    );
+
     HRESULT __stdcall FinishScreenUpdate();
 
     HRESULT __stdcall TryGetNextInputEvent(
@@ -46,5 +54,6 @@ private:
 
     Dx11GraphicsWnd();
 
+    std::vector<uint8_t> cpuVideoBuf;
     std::atomic<ULONG> refCounter = 1;
 };

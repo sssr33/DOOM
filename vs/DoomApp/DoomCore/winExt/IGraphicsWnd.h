@@ -2,6 +2,8 @@
 #include "InterfaceBase.h"
 #include "IGraphicsWndInputEvent.h"
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -31,6 +33,13 @@ extern "C" {
             IGraphicsWnd* This,
             void** buffer
             );
+
+        HRESULT(__stdcall* SetPalette)(
+            IGraphicsWnd* This,
+            const uint8_t* paletteIndexes,
+            const uint8_t* paletteColors,
+            uint32_t paletteSize
+        );
 
         HRESULT(__stdcall* FinishScreenUpdate)(
             IGraphicsWnd* This);

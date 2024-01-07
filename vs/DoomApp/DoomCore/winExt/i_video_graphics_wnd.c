@@ -574,8 +574,12 @@ void I_ReadScreen(byte* scr)
 //
 void I_SetPalette(byte* palette)
 {
-	assert(false);
-	//UploadNewPalette(X_cmap, palette);
+	HRESULT hr = S_OK;
+
+	hr = graphicsWnd->vtable->SetPalette(graphicsWnd, palette, gammatable[usegamma], 256);
+	if (FAILED(hr)) {
+		I_Error("Failed to I_SetPalette");
+	}
 }
 
 
