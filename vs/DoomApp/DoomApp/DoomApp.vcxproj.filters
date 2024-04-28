@@ -10,6 +10,9 @@
     <ClInclude Include="Dx11GraphicsWndFactory.h" />
     <ClInclude Include="Dx11GraphicsWnd.h" />
     <ClInclude Include="vtable_bind.h" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="SmartHandle.h" />
+    <ClInclude Include="WindowsThreadMessageQueue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -17,5 +20,8 @@
     <ClCompile Include="Wrapper.cpp" />
     <ClCompile Include="Dx11GraphicsWndFactory.cpp" />
     <ClCompile Include="Dx11GraphicsWnd.cpp" />
+    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="SmartHandle.cpp" />
+    <ClCompile Include="WindowsThreadMessageQueue.cpp" />
   </ItemGroup>
 </Project>

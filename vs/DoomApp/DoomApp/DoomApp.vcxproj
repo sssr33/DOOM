@@ -173,16 +173,22 @@
   <ItemGroup>
     <ClInclude Include="Dx11GraphicsWnd.h" />
     <ClInclude Include="Dx11GraphicsWndFactory.h" />
+    <ClInclude Include="SmartHandle.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="vtable_bind.h" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="WindowsThreadMessageQueue.h" />
     <ClInclude Include="Wrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DoomApp.cpp" />
     <ClCompile Include="Dx11GraphicsWnd.cpp" />
     <ClCompile Include="Dx11GraphicsWndFactory.cpp" />
+    <ClCompile Include="SmartHandle.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WindowsThreadMessageQueue.cpp" />
     <ClCompile Include="Wrapper.cpp" />
   </ItemGroup>
   <ItemGroup>

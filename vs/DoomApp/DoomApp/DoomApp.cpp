@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Wrapper.h"
 #include "Dx11GraphicsWndFactory.h"
+#include "Window.h"
 
 #include <windows.h>
 #include <vector>
@@ -17,8 +18,51 @@
 void SetGraphicsWndFactory();
 std::vector<char*> MakeArgv();
 
+#include <thread>
+
+HANDLE mainThread = 0;
+
+void CALLBACK WakeWorker(ULONG_PTR)
+{
+	int stop = 234;
+}
+
 int main()
 {
+	{
+		DWORD threadId = GetThreadId(GetCurrentThread());
+
+		mainThread = OpenThread(THREAD_SET_CONTEXT, FALSE, threadId);
+	}
+
+	auto th = std::thread([]
+		{
+			Sleep(5000);
+
+			if (!QueueUserAPC(WakeWorker, mainThread, 0)) {
+				int stop = 234;
+			}
+		});
+
+	while (true)
+	{
+		Window wnd(L"DoomWndClass", L"Doom");
+		Window wnd1(L"DoomWndClass", L"Doom2");
+		Window wnd2(L"DoomWndClass", L"Doom3");
+		Window wnd3(L"DoomWndClass", L"Doom4");
+
+		WindowsThreadMessageQueue wndMsgQueue;
+
+		//Sleep(3000);
+
+		while (true)
+		{
+			wndMsgQueue.WaitAndProcessQueuedMessages();
+		}
+
+		int stop = 234;
+	}
+
 	SetGraphicsWndFactory();
 
 	auto argv = MakeArgv();
