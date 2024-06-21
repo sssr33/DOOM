@@ -24,12 +24,14 @@ Window::Window(std::wstring windowClassName, std::wstring windowName)
     }
 
     this->hwnd = CreateWindowEx(
-        0,
+        WS_EX_NOREDIRECTIONBITMAP /*| WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_TOPMOST*/,
         this->windowClassName.c_str(),
         this->windowName.c_str(),
         WS_OVERLAPPEDWINDOW,
+        //WS_POPUP | WS_THICKFRAME | WS_BORDER | WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX, // to remove border
         // Size and position
-        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+        //CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+        200, 200, 1280, 720,
         nullptr,       // Parent window
         nullptr,       // Menu
         wc.hInstance,

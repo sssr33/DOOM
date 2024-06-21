@@ -29,39 +29,39 @@ void CALLBACK WakeWorker(ULONG_PTR)
 
 int main()
 {
-	{
-		DWORD threadId = GetThreadId(GetCurrentThread());
+	//{
+	//	DWORD threadId = GetThreadId(GetCurrentThread());
 
-		mainThread = OpenThread(THREAD_SET_CONTEXT, FALSE, threadId);
-	}
+	//	mainThread = OpenThread(THREAD_SET_CONTEXT, FALSE, threadId);
+	//}
 
-	auto th = std::thread([]
-		{
-			Sleep(5000);
+	//auto th = std::thread([]
+	//	{
+	//		Sleep(5000);
 
-			if (!QueueUserAPC(WakeWorker, mainThread, 0)) {
-				int stop = 234;
-			}
-		});
+	//		if (!QueueUserAPC(WakeWorker, mainThread, 0)) {
+	//			int stop = 234;
+	//		}
+	//	});
 
-	while (true)
-	{
-		Window wnd(L"DoomWndClass", L"Doom");
-		Window wnd1(L"DoomWndClass", L"Doom2");
-		Window wnd2(L"DoomWndClass", L"Doom3");
-		Window wnd3(L"DoomWndClass", L"Doom4");
+	//while (true)
+	//{
+	//	Window wnd(L"DoomWndClass", L"Doom");
+	//	Window wnd1(L"DoomWndClass", L"Doom2");
+	//	Window wnd2(L"DoomWndClass", L"Doom3");
+	//	Window wnd3(L"DoomWndClass", L"Doom4");
 
-		WindowsThreadMessageQueue wndMsgQueue;
+	//	WindowsThreadMessageQueue wndMsgQueue;
 
-		//Sleep(3000);
+	//	//Sleep(3000);
 
-		while (true)
-		{
-			wndMsgQueue.WaitAndProcessQueuedMessages();
-		}
+	//	while (true)
+	//	{
+	//		wndMsgQueue.WaitAndProcessQueuedMessages();
+	//	}
 
-		int stop = 234;
-	}
+	//	int stop = 234;
+	//}
 
 	SetGraphicsWndFactory();
 

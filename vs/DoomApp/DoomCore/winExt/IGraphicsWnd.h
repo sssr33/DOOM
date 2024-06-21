@@ -34,6 +34,13 @@ extern "C" {
             void** buffer
             );
 
+        // paletteIndexes contains paletteSize * 3(rgb) bytes, so size of each paletteIndexes is 768 bytes(256 * 3)
+        //                PLAYPAL lump contains all palettes and has size 10752 which is equals to 14 palettes as described in https://doomwiki.org/wiki/PLAYPAL
+        // paletteColors contains paletteSize bytes. It contains color values that can be indexed by paletteIndexes
+        //               r = paletteColors[paletteIndexes[0]]
+        //               g = paletteColors[paletteIndexes[1]]
+        //               b = paletteColors[paletteIndexes[2]]
+        //               paletteIndexes += 3
         HRESULT(__stdcall* SetPalette)(
             IGraphicsWnd* This,
             const uint8_t* paletteIndexes,

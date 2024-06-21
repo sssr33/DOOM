@@ -13,6 +13,13 @@
     <ClInclude Include="Window.h" />
     <ClInclude Include="SmartHandle.h" />
     <ClInclude Include="WindowsThreadMessageQueue.h" />
+    <ClInclude Include="Dx\Dx11Device.h" />
+    <ClInclude Include="Dx\Dx11Include.h" />
+    <ClInclude Include="Dx\Dx11HwndSwapChain.h" />
+    <ClInclude Include="HResultException.h" />
+    <ClInclude Include="Dx\Vertices.h" />
+    <ClInclude Include="Dx\ShaderLoader.h" />
+    <ClInclude Include="Dx\CBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -23,5 +30,13 @@
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="SmartHandle.cpp" />
     <ClCompile Include="WindowsThreadMessageQueue.cpp" />
+    <ClCompile Include="Dx\Dx11Device.cpp" />
+    <ClCompile Include="Dx\Dx11HwndSwapChain.cpp" />
+    <ClCompile Include="HResultException.cpp" />
+    <ClCompile Include="Dx\ShaderLoader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Dx\Shaders\DoomBackBufferVS.hlsl" />
+    <FxCompile Include="Dx\Shaders\DoomBackBufferPS.hlsl" />
   </ItemGroup>
 </Project>
