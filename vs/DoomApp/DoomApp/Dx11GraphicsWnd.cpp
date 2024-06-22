@@ -11,18 +11,18 @@ InterfacePtr<Dx11GraphicsWnd> Dx11GraphicsWnd::Make() {
     return InterfacePtr<Dx11GraphicsWnd>(new Dx11GraphicsWnd, DoNotAddRefKey{});
 }
 
-HRESULT __stdcall Dx11GraphicsWnd::QueryInterface(
-    const IID* riid,
+IRESULT __stdcall Dx11GraphicsWnd::QueryInterface(
+    const IGUID* guid,
     void** ppvObject)
 {
-    return E_NOINTERFACE;
+    return IRESULT_ERROR;
 }
 
-ULONG __stdcall Dx11GraphicsWnd::AddRef() {
+int32_t __stdcall Dx11GraphicsWnd::AddRef() {
     return ++this->refCounter;
 }
 
-ULONG __stdcall Dx11GraphicsWnd::Release() {
+int32_t __stdcall Dx11GraphicsWnd::Release() {
     auto refc = --this->refCounter;
 
     if (refc == 0) {
@@ -32,7 +32,7 @@ ULONG __stdcall Dx11GraphicsWnd::Release() {
     return refc;
 }
 
-HRESULT __stdcall Dx11GraphicsWnd::InitializeScreen(
+IRESULT __stdcall Dx11GraphicsWnd::InitializeScreen(
     int width,
     int height,
     int bitDepth
@@ -41,7 +41,7 @@ HRESULT __stdcall Dx11GraphicsWnd::InitializeScreen(
     if (bitDepth != 8) {
         // for now only 8 bit palette colors supported as should be in original Doom
         assert(false);
-        return E_FAIL;
+        return IRESULT_ERROR;
     }
 
     this->cpuVideoBufPitch = static_cast<uint32_t>(width * (bitDepth / 8));
@@ -65,7 +65,7 @@ HRESULT __stdcall Dx11GraphicsWnd::InitializeScreen(
 
     hr = dev->CreateTexture2D(&texDesc, nullptr, &this->doomBackBufferTex);
     if (FAILED(hr)) {
-        return hr;
+        return IRESULT_ERROR;
     }
 
     texDesc.Usage = D3D11_USAGE_STAGING;
@@ -74,33 +74,33 @@ HRESULT __stdcall Dx11GraphicsWnd::InitializeScreen(
 
     hr = dev->CreateTexture2D(&texDesc, nullptr, &this->doomBackBufferTexCpu);
     if (FAILED(hr)) {
-        return hr;
+        return IRESULT_ERROR;
     }
 
     hr = dev->CreateShaderResourceView(this->doomBackBufferTex.Get(), nullptr, &this->doomBackBufferSrv);
     if (FAILED(hr)) {
-        return hr;
+        return IRESULT_ERROR;
     }
 
     this->UpdateMatrices();
 
-    return hr;
+    return IRESULT_OK;
 }
 
-HRESULT __stdcall Dx11GraphicsWnd::GetCPUBackBuffer(
+IRESULT __stdcall Dx11GraphicsWnd::GetCPUBackBuffer(
     void** buffer
 )
 {
     if (!buffer) {
-        return E_POINTER;
+        return IRESULT_ERROR;
     }
 
     *buffer = this->cpuVideoBuf.data();
 
-    return S_OK;
+    return IRESULT_OK;
 }
 
-HRESULT __stdcall Dx11GraphicsWnd::SetPalette(
+IRESULT __stdcall Dx11GraphicsWnd::SetPalette(
     const uint8_t* paletteIndexes,
     const uint8_t* paletteColors,
     uint32_t paletteSize
@@ -110,7 +110,7 @@ HRESULT __stdcall Dx11GraphicsWnd::SetPalette(
         assert(false);
         // If it fails try to use D3D_FL9_3_REQ_TEXTURE1D_U_DIMENSION or greated limits
         // Or try to implement rectangle/square palette size
-        return E_FAIL;
+        return IRESULT_ERROR;
     }
 
     struct BGRA {
@@ -157,18 +157,18 @@ HRESULT __stdcall Dx11GraphicsWnd::SetPalette(
 
     hr = dev->CreateTexture2D(&texDesc, &texInitData, &this->doomPaletteTex);
     if (FAILED(hr)) {
-        return hr;
+        return IRESULT_ERROR;
     }
 
     hr = dev->CreateShaderResourceView(this->doomPaletteTex.Get(), nullptr, &this->doomPaletteSrv);
     if (FAILED(hr)) {
-        return hr;
+        return IRESULT_ERROR;
     }
 
-    return S_OK;
+    return IRESULT_OK;
 }
 
-HRESULT __stdcall Dx11GraphicsWnd::FinishScreenUpdate() {
+IRESULT __stdcall Dx11GraphicsWnd::FinishScreenUpdate() {
     try {
         // set flag only here to update doomBackBufferTex only when game says it's done drawing
         // On window resizes doomBackBufferTex not need to be updated
@@ -179,18 +179,18 @@ HRESULT __stdcall Dx11GraphicsWnd::FinishScreenUpdate() {
     catch (...) {
         // check logic
         assert(false);
-        return E_FAIL;
+        return IRESULT_ERROR;
     }
 
-    return S_OK;
+    return IRESULT_OK;
 }
 
-HRESULT __stdcall Dx11GraphicsWnd::TryGetNextInputEvent(
+IRESULT __stdcall Dx11GraphicsWnd::TryGetNextInputEvent(
     IGraphicsWndInputEvent** evt)
 {
     this->wndMsgQueue.ProcessQueuedMessages();
 
-    return S_OK;
+    return IRESULT_OK;
 }
 
 Dx11GraphicsWnd::Dx11GraphicsWnd()

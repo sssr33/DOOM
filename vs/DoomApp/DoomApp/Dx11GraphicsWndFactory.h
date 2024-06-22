@@ -11,15 +11,15 @@ public:
 
     static InterfacePtr<Dx11GraphicsWndFactory> Make();
 
-    HRESULT __stdcall QueryInterface(
-        const IID* riid,
+    IRESULT __stdcall QueryInterface(
+        const IGUID* guid,
         void** ppvObject);
 
-    ULONG __stdcall AddRef();
+    int32_t __stdcall AddRef();
 
-    ULONG __stdcall Release();
+    int32_t __stdcall Release();
 
-    HRESULT __stdcall CreateGraphicsWnd(
+    IRESULT __stdcall CreateGraphicsWnd(
         const char* implName, IGraphicsWnd** res);
 
 private:
@@ -37,5 +37,5 @@ private:
 
     Dx11GraphicsWndFactory();
 
-    std::atomic<ULONG> refCounter = 1;
+    std::atomic<int32_t> refCounter = 1;
 };

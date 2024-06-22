@@ -20,6 +20,7 @@
     <ClInclude Include="Dx\Vertices.h" />
     <ClInclude Include="Dx\ShaderLoader.h" />
     <ClInclude Include="Dx\CBuffer.h" />
+    <ClInclude Include="WrapperDoom.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -34,6 +35,7 @@
     <ClCompile Include="Dx\Dx11HwndSwapChain.cpp" />
     <ClCompile Include="HResultException.cpp" />
     <ClCompile Include="Dx\ShaderLoader.cpp" />
+    <ClCompile Include="WrapperDoom.c" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Dx\Shaders\DoomBackBufferVS.hlsl" />

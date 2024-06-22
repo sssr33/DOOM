@@ -61,34 +61,34 @@ extern "C" {
     typedef struct IGraphicsWndInputEvent IGraphicsWndInputEvent;
 
     struct IGraphicsWndInputEventVtbl {
-        HRESULT(__stdcall* QueryInterface)(
+        IRESULT(__stdcall* QueryInterface)(
             IGraphicsWndInputEvent* This,
-            const IID* riid,
+            const IGUID* guid,
             void** ppvObject);
 
-        HRESULT(__stdcall* AddRef)(
+        int32_t(__stdcall* AddRef)(
             IGraphicsWndInputEvent* This);
 
-        HRESULT(__stdcall* Release)(
+        int32_t(__stdcall* Release)(
             IGraphicsWndInputEvent* This);
 
-        HRESULT(__stdcall* GetEventType)(
+        IRESULT(__stdcall* GetEventType)(
             IGraphicsWndInputEvent* This,
             enum GraphicsWndInputEventType* type);
 
-        HRESULT(__stdcall* GetKey)(
+        IRESULT(__stdcall* GetKey)(
             IGraphicsWndInputEvent* This,
             enum GraphicsWndInputEventKey* key);
 
-        HRESULT(__stdcall* GetKeyChar)(
+        IRESULT(__stdcall* GetKeyChar)(
             IGraphicsWndInputEvent* This,
             int* keyChar);
 
-        HRESULT(__stdcall* GetMouseButton)(
+        IRESULT(__stdcall* GetMouseButton)(
             IGraphicsWndInputEvent* This,
             enum GraphicsWndInputEventMouseButton* mouseButton);
 
-        HRESULT(__stdcall* GetMousePosition)(
+        IRESULT(__stdcall* GetMousePosition)(
             IGraphicsWndInputEvent* This,
             int* x,
             int* y);

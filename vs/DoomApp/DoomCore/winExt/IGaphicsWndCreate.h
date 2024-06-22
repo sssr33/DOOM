@@ -6,10 +6,10 @@
 extern "C" {
 #endif
 
-    HRESULT CreateIGraphicsWnd(const char* implName, IGraphicsWnd** res);
+    IRESULT CreateIGraphicsWnd(const char* implName, IGraphicsWnd** res);
 
-    HRESULT GetIGraphicsWndFactory(IGraphicsWndFactory** factory);
-    HRESULT SetIGraphicsWndFactory(IGraphicsWndFactory* factory);
+    IRESULT GetIGraphicsWndFactory(IGraphicsWndFactory** factory);
+    IRESULT SetIGraphicsWndFactory(IGraphicsWndFactory* factory);
 
 #ifdef __cplusplus
 }

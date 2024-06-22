@@ -1,17 +1,31 @@
 #include "Wrapper.h"
 
 extern "C" {
-#include <doomdef.h>
-#include <m_argv.h>
-#include <d_main.h>
+#include "WrapperDoom.h"
 }
+
+//extern "C" {
+//#include <doomdef.h>
+//#include <m_argv.h>
+//#include <d_main.h>
+//}
+//// from doom code to fix warnings
+//#undef MAXCHAR
+//#undef MAXSHORT
+//#undef MAXINT
+//#undef MAXLONG
+//#undef MINCHAR
+//#undef MINSHORT
+//#undef MININT
+//#undef MINLONG
 
 #include <string>
 #include <cassert>
+#include <Windows.h>
 
 void mainWrapper(char **argv, int argc) {
-	myargc = argc;
-	myargv = argv;
+	/*myargc = argc;
+	myargv = argv;*/
 
 	{
 		errno_t err = {};
@@ -32,5 +46,7 @@ void mainWrapper(char **argv, int argc) {
 		}
 	}
 
-	D_DoomMain();
+	mainDoom(argv, argc);
+
+	//D_DoomMain();
 }

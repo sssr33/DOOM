@@ -7,7 +7,7 @@
 #include <stdarg.h>
 #include <sys/time.h>
 #include <sys/types.h>
-#include <sys/socket.h>
+//#include <sys/socket.h> // not compatible with doom code for now
 
 #include <netinet/in.h>
 #include <signal.h>
@@ -42,15 +42,15 @@ static int	multiply = 1;
 //  Translates the key currently in X_event
 //
 
-HRESULT xlatekey(IGraphicsWndInputEvent* inputEvt, const char** errStr, int* rc)
+IRESULT xlatekey(IGraphicsWndInputEvent* inputEvt, const char** errStr, int* rc)
 {
-	HRESULT hr = S_OK;
+	IRESULT ir = IRESULT_OK;
 	enum GraphicsWndInputEventKey key = GraphicsWndInputEventKey_None;
 
-	hr = inputEvt->vtable->GetKey(inputEvt, &key);
-	if (FAILED(hr)) {
+	ir = inputEvt->vtable->GetKey(inputEvt, &key);
+	if (IRESULT_FAILED(ir)) {
 		*errStr = "inputEvt.GetKey failed in xlatekey";
-		return hr;
+		return ir;
 	}
 
 	switch (key) {
@@ -85,15 +85,15 @@ HRESULT xlatekey(IGraphicsWndInputEvent* inputEvt, const char** errStr, int* rc)
 	case GraphicsWndInputEventKey_AltLeft:
 	case GraphicsWndInputEventKey_AltRight: *rc = KEY_RALT; break;
 	case GraphicsWndInputEventKey_Char:
-		hr = inputEvt->vtable->GetKeyChar(inputEvt, rc);
-		if (FAILED(hr)) {
+		ir = inputEvt->vtable->GetKeyChar(inputEvt, rc);
+		if (IRESULT_FAILED(ir)) {
 			*errStr = "inputEvt.GetKeyChar failed in xlatekey";
-			return hr;
+			return ir;
 		}
 		break;
 	}
 
-	return S_OK;
+	return IRESULT_OK;
 }
 
 void I_ShutdownGraphics(void)
@@ -110,10 +110,10 @@ void I_ShutdownGraphics(void)
 	//image->data = NULL;
 
 	if (graphicsWnd) {
-		HRESULT hr = S_OK;
+		IRESULT ir = IRESULT_OK;
 
-		hr = graphicsWnd->vtable->Release(graphicsWnd);
-		if (FAILED(hr)) {
+		ir = graphicsWnd->vtable->Release(graphicsWnd);
+		if (IRESULT_FAILED(ir)) {
 			I_Error("graphicsWnd.Release failed");
 		}
 		graphicsWnd = NULL;
@@ -135,9 +135,9 @@ static int	lastmousex = 0;
 static int	lastmousey = 0;
 boolean		mousemoved = false;
 
-HRESULT I_GetEvent_impl(IGraphicsWndInputEvent** inputEvt, const char** errStr, boolean* res) {
+IRESULT I_GetEvent_impl(IGraphicsWndInputEvent** inputEvt, const char** errStr, boolean* res) {
 	event_t event;
-	HRESULT hr = S_OK;
+	IRESULT ir = IRESULT_OK;
 	enum GraphicsWndInputEventType evtType = GraphicsWndInputEventType_None;
 	enum GraphicsWndInputEventMouseButton mouseButton = GraphicsWndInputEventMouseButton_None;
 	int mouseX = 0;
@@ -145,22 +145,22 @@ HRESULT I_GetEvent_impl(IGraphicsWndInputEvent** inputEvt, const char** errStr, 
 
 	assert(graphicsWnd);
 
-	hr = graphicsWnd->vtable->TryGetNextInputEvent(graphicsWnd, inputEvt);
-	if (FAILED(hr)) {
+	ir = graphicsWnd->vtable->TryGetNextInputEvent(graphicsWnd, inputEvt);
+	if (IRESULT_FAILED(ir)) {
 		*errStr = "graphicsWnd.TryGetNextInputEvent failed";
-		return hr;
+		return ir;
 	}
 
 	if (*inputEvt == NULL) {
 		// no events for now
 		*res = false;
-		return S_OK;
+		return IRESULT_OK;
 	}
 
-	hr = (*inputEvt)->vtable->GetEventType(*inputEvt, &evtType);
-	if (FAILED(hr)) {
+	ir = (*inputEvt)->vtable->GetEventType(*inputEvt, &evtType);
+	if (IRESULT_FAILED(ir)) {
 		*errStr = "inputEvt.GetEventType failed";
-		return hr;
+		return ir;
 	}
 
 	switch (evtType) {
@@ -168,28 +168,28 @@ HRESULT I_GetEvent_impl(IGraphicsWndInputEvent** inputEvt, const char** errStr, 
 		break;
 	case GraphicsWndInputEventType_KeyPress:
 		event.type = ev_keydown;
-		hr = xlatekey(*inputEvt, errStr, &event.data1);
-		if (FAILED(hr)) {
-			return hr;
+		ir = xlatekey(*inputEvt, errStr, &event.data1);
+		if (IRESULT_FAILED(ir)) {
+			return ir;
 		}
 		D_PostEvent(&event);
 		// fprintf(stderr, "k");
 		break;
 	case GraphicsWndInputEventType_KeyRelease:
 		event.type = ev_keyup;
-		hr = xlatekey(*inputEvt, errStr, &event.data1);
-		if (FAILED(hr)) {
-			return hr;
+		ir = xlatekey(*inputEvt, errStr, &event.data1);
+		if (IRESULT_FAILED(ir)) {
+			return ir;
 		}
 		D_PostEvent(&event);
 		// fprintf(stderr, "ku");
 		break;
 	case GraphicsWndInputEventType_MousePress:
 		event.type = ev_mouse;
-		hr = (*inputEvt)->vtable->GetMouseButton(*inputEvt, &mouseButton);
-		if (FAILED(hr)) {
+		ir = (*inputEvt)->vtable->GetMouseButton(*inputEvt, &mouseButton);
+		if (IRESULT_FAILED(ir)) {
 			*errStr = "inputEvt.GetMouseButton press failed";
-			return hr;
+			return ir;
 		}
 		event.data1 =
 			(mouseButton == GraphicsWndInputEventMouseButton_Left ? 1 : 0)
@@ -201,10 +201,10 @@ HRESULT I_GetEvent_impl(IGraphicsWndInputEvent** inputEvt, const char** errStr, 
 		break;
 	case GraphicsWndInputEventType_MouseRelease:
 		event.type = ev_mouse;
-		hr = (*inputEvt)->vtable->GetMouseButton(*inputEvt, &mouseButton);
-		if (FAILED(hr)) {
+		ir = (*inputEvt)->vtable->GetMouseButton(*inputEvt, &mouseButton);
+		if (IRESULT_FAILED(ir)) {
 			*errStr = "inputEvt.GetMouseButton release failed";
-			return hr;
+			return ir;
 		}
 		event.data1 =
 			(mouseButton == GraphicsWndInputEventMouseButton_Left ? 1 : 0)
@@ -216,15 +216,15 @@ HRESULT I_GetEvent_impl(IGraphicsWndInputEvent** inputEvt, const char** errStr, 
 		break;
 	case GraphicsWndInputEventType_MouseMove:
 		event.type = ev_mouse;
-		hr = (*inputEvt)->vtable->GetMouseButton(*inputEvt, &mouseButton);
-		if (FAILED(hr)) {
+		ir = (*inputEvt)->vtable->GetMouseButton(*inputEvt, &mouseButton);
+		if (IRESULT_FAILED(ir)) {
 			*errStr = "inputEvt.GetMouseButton move failed";
-			return hr;
+			return ir;
 		}
-		hr = (*inputEvt)->vtable->GetMousePosition(*inputEvt, &mouseX, &mouseY);
-		if (FAILED(hr)) {
+		ir = (*inputEvt)->vtable->GetMousePosition(*inputEvt, &mouseX, &mouseY);
+		if (IRESULT_FAILED(ir)) {
 			*errStr = "inputEvt.GetMousePosition move failed";
-			return hr;
+			return ir;
 		}
 		event.data1 =
 			(mouseButton == GraphicsWndInputEventMouseButton_Left ? 1 : 0)
@@ -258,23 +258,23 @@ HRESULT I_GetEvent_impl(IGraphicsWndInputEvent** inputEvt, const char** errStr, 
 
 	*res = true;
 
-	return S_OK;
+	return IRESULT_OK;
 }
 
 boolean I_GetEvent(void)
 {
-	HRESULT hr = S_OK;
+	IRESULT ir = IRESULT_OK;
 	const char* errStr = NULL;
 	IGraphicsWndInputEvent* inputEvt = NULL;
 	boolean res = false;
 
-	hr = I_GetEvent_impl(&inputEvt, &errStr, &res);
+	ir = I_GetEvent_impl(&inputEvt, &errStr, &res);
 
 	if (inputEvt) {
 		inputEvt->vtable->Release(inputEvt);
 	}
 
-	if (FAILED(hr)) {
+	if (IRESULT_FAILED(ir)) {
 		I_Error(errStr);
 	}
 
@@ -335,7 +335,7 @@ void I_FinishUpdate(void)
 	int		tics;
 	int		i;
 	byte* imageData = NULL;
-	HRESULT hr = S_OK;
+	IRESULT ir = IRESULT_OK;
 	// UNUSED static unsigned char *bigscreen=0;
 
 	// draws little dots on the bottom of the screen
@@ -355,8 +355,8 @@ void I_FinishUpdate(void)
 	}
 
 	if (multiply != 1) {
-		hr = graphicsWnd->vtable->GetCPUBackBuffer(graphicsWnd, (void**)&imageData);
-		if (FAILED(hr)) {
+		ir = graphicsWnd->vtable->GetCPUBackBuffer(graphicsWnd, (void**)&imageData);
+		if (IRESULT_FAILED(ir)) {
 			I_Error("Failed to GetCPUBackBuffer");
 		}
 	}
@@ -468,8 +468,8 @@ void I_FinishUpdate(void)
 		Expand4((unsigned*)(screens[0]), (double*)(imageData));
 	}
 
-	hr = graphicsWnd->vtable->FinishScreenUpdate(graphicsWnd);
-	if (FAILED(hr)) {
+	ir = graphicsWnd->vtable->FinishScreenUpdate(graphicsWnd);
+	if (IRESULT_FAILED(ir)) {
 		I_Error("Failed to FinishScreenUpdate");
 	}
 
@@ -574,10 +574,10 @@ void I_ReadScreen(byte* scr)
 //
 void I_SetPalette(byte* palette)
 {
-	HRESULT hr = S_OK;
+	IRESULT ir = IRESULT_OK;
 
-	hr = graphicsWnd->vtable->SetPalette(graphicsWnd, palette, gammatable[usegamma], 256);
-	if (FAILED(hr)) {
+	ir = graphicsWnd->vtable->SetPalette(graphicsWnd, palette, gammatable[usegamma], 256);
+	if (IRESULT_FAILED(ir)) {
 		I_Error("Failed to I_SetPalette");
 	}
 }
@@ -689,7 +689,7 @@ void I_SetPalette(byte* palette)
 
 void I_InitGraphics(void)
 {
-	HRESULT hr = S_OK;
+	IRESULT ir = IRESULT_OK;
 	int bitDepth = 8;
 	//char* displayname = 0;
 	char* graphicsImplName = 0;
@@ -717,9 +717,9 @@ void I_InitGraphics(void)
 	if ((pnum = M_CheckParm("-graphicsImplName"))) // get name to create graphics implementation
 	{
 		graphicsImplName = myargv[pnum + 1];
-		hr = CreateIGraphicsWnd(graphicsImplName, &graphicsWnd);
+		ir = CreateIGraphicsWnd(graphicsImplName, &graphicsWnd);
 
-		if (FAILED(hr)) {
+		if (IRESULT_FAILED(ir)) {
 			I_Error("Failed to create graphics implementation [%s]", graphicsImplName);
 		}
 	}
@@ -743,18 +743,18 @@ void I_InitGraphics(void)
 	// check if the user wants to grab the mouse (quite unnice)
 	grabMouse = !!M_CheckParm("-grabmouse");
 
-	hr = graphicsWnd->vtable->InitializeScreen(graphicsWnd,
+	ir = graphicsWnd->vtable->InitializeScreen(graphicsWnd,
 		X_width,
 		X_height,
 		bitDepth
 	);
-	if (FAILED(hr)) {
+	if (IRESULT_FAILED(ir)) {
 		I_Error("Failed to initialize graphics with width=[%d] height=[%d] bitDepth=[%d]", X_width, X_height, bitDepth);
 	}
 
 	if (multiply == 1) {
-		hr = graphicsWnd->vtable->GetCPUBackBuffer(graphicsWnd, (void**)&screens[0]);
-		if (FAILED(hr)) {
+		ir = graphicsWnd->vtable->GetCPUBackBuffer(graphicsWnd, (void**)&screens[0]);
+		if (IRESULT_FAILED(ir)) {
 			I_Error("Failed to GetCPUBackBuffer");
 		}
 	}

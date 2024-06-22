@@ -29,7 +29,7 @@ private:
     InterfacePtr<IGraphicsWndFactory> graphicsWndFactory;
 };
 
-HRESULT CreateIGraphicsWnd(const char* implName, IGraphicsWnd** res) {
+IRESULT CreateIGraphicsWnd(const char* implName, IGraphicsWnd** res) {
     auto& inst = CreateIGraphicsWndSingleton::Instance();
     auto lk = std::lock_guard(inst.GetMtx());
     auto& graphicsWndFactory = inst.GetIGraphicsWndFactory();
@@ -38,12 +38,12 @@ HRESULT CreateIGraphicsWnd(const char* implName, IGraphicsWnd** res) {
         return graphicsWndFactory->vtable->CreateGraphicsWnd(graphicsWndFactory.get(), implName, res);
     }
 
-    return E_NOTIMPL;
+    return IRESULT_ERROR;
 }
 
-HRESULT GetIGraphicsWndFactory(IGraphicsWndFactory** factory) {
+IRESULT GetIGraphicsWndFactory(IGraphicsWndFactory** factory) {
     if (!factory) {
-        return E_POINTER;
+        return IRESULT_ERROR;
     }
 
     auto& inst = CreateIGraphicsWndSingleton::Instance();
@@ -52,14 +52,14 @@ HRESULT GetIGraphicsWndFactory(IGraphicsWndFactory** factory) {
 
     *factory = graphicsWndFactory.detach();
 
-    return S_OK;
+    return IRESULT_OK;
 }
 
-HRESULT SetIGraphicsWndFactory(IGraphicsWndFactory* factory) {
+IRESULT SetIGraphicsWndFactory(IGraphicsWndFactory* factory) {
     auto& inst = CreateIGraphicsWndSingleton::Instance();
     auto lk = std::lock_guard(inst.GetMtx());
 
     inst.SetIGraphicsWndFactory(InterfacePtr<IGraphicsWndFactory>(factory, AddRefKey{}));
 
-    return S_OK;
+    return IRESULT_OK;
 }

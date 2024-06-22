@@ -11,25 +11,25 @@ extern "C" {
     typedef struct IGraphicsWnd IGraphicsWnd;
 
     struct IGraphicsWndVtbl {
-        HRESULT(__stdcall* QueryInterface)(
+        IRESULT(__stdcall* QueryInterface)(
             IGraphicsWnd* This,
-            const IID* riid,
+            const IGUID* guid,
             void** ppvObject);
 
-        ULONG(__stdcall* AddRef)(
+        int32_t(__stdcall* AddRef)(
             IGraphicsWnd* This);
 
-        ULONG(__stdcall* Release)(
+        int32_t(__stdcall* Release)(
             IGraphicsWnd* This);
 
-        HRESULT(__stdcall* InitializeScreen)(
+        IRESULT(__stdcall* InitializeScreen)(
             IGraphicsWnd* This,
             int width,
             int height,
             int bitDepth
             );
 
-        HRESULT(__stdcall* GetCPUBackBuffer)(
+        IRESULT(__stdcall* GetCPUBackBuffer)(
             IGraphicsWnd* This,
             void** buffer
             );
@@ -41,17 +41,17 @@ extern "C" {
         //               g = paletteColors[paletteIndexes[1]]
         //               b = paletteColors[paletteIndexes[2]]
         //               paletteIndexes += 3
-        HRESULT(__stdcall* SetPalette)(
+        IRESULT(__stdcall* SetPalette)(
             IGraphicsWnd* This,
             const uint8_t* paletteIndexes,
             const uint8_t* paletteColors,
             uint32_t paletteSize
         );
 
-        HRESULT(__stdcall* FinishScreenUpdate)(
+        IRESULT(__stdcall* FinishScreenUpdate)(
             IGraphicsWnd* This);
 
-        HRESULT(__stdcall* TryGetNextInputEvent)(
+        IRESULT(__stdcall* TryGetNextInputEvent)(
             IGraphicsWnd* This,
             IGraphicsWndInputEvent** evt);
     };

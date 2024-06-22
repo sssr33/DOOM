@@ -9,18 +9,18 @@ extern "C" {
     typedef struct IGraphicsWndFactory IGraphicsWndFactory;
 
     struct IGraphicsWndFactoryVtbl {
-        HRESULT(__stdcall* QueryInterface)(
+        IRESULT(__stdcall* QueryInterface)(
             IGraphicsWndFactory* This,
-            const IID* riid,
+            const IGUID* guid,
             void** ppvObject);
 
-        ULONG(__stdcall* AddRef)(
+        int32_t(__stdcall* AddRef)(
             IGraphicsWndFactory* This);
 
-        ULONG(__stdcall* Release)(
+        int32_t(__stdcall* Release)(
             IGraphicsWndFactory* This);
 
-        HRESULT(__stdcall* CreateGraphicsWnd)(
+        IRESULT(__stdcall* CreateGraphicsWnd)(
             IGraphicsWndFactory* This, const char* implName, IGraphicsWnd** res);
     };
 

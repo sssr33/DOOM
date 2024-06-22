@@ -1,24 +1,22 @@
 #pragma once
-
-#include <windowsSafe.h>
 #include <time.h>
-#include <winsock2.h>
-#include <ws2tcpip.h>
 #include <stdio.h>
+
+// WARNING DO NOT USE windows headers because it will conflict with boolean type which must be int
+// TODO try refactor to remove duplicate definitions
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#if defined(_MSC_VER) || defined(_MSC_EXTENSIONS)
-#define DELTA_EPOCH_IN_MICROSECS  11644473600000000Ui64
-#else
-#define DELTA_EPOCH_IN_MICROSECS  11644473600000000ULL
-#endif
-
 struct timezone {
     int  tz_minuteswest; /* minutes W of Greenwich */
     int  tz_dsttime;     /* type of dst correction */
+};
+
+struct timeval {
+    long    tv_sec;         /* seconds */
+    long    tv_usec;        /* and microseconds */
 };
 
 int gettimeofday(struct timeval* tv, struct timezone* tz);

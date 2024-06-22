@@ -17,33 +17,33 @@ class Dx11GraphicsWnd : public IGraphicsWnd {
 public:
     static InterfacePtr<Dx11GraphicsWnd> Make();
 
-    HRESULT __stdcall QueryInterface(
-        const IID* riid,
+    IRESULT __stdcall QueryInterface(
+        const IGUID* guid,
         void** ppvObject);
 
-    ULONG __stdcall AddRef();
+    int32_t __stdcall AddRef();
 
-    ULONG __stdcall Release();
+    int32_t __stdcall Release();
 
-    HRESULT __stdcall InitializeScreen(
+    IRESULT __stdcall InitializeScreen(
         int width,
         int height,
         int bitDepth
         );
 
-    HRESULT __stdcall GetCPUBackBuffer(
+    IRESULT __stdcall GetCPUBackBuffer(
         void** buffer
         );
 
-    HRESULT __stdcall SetPalette(
+    IRESULT __stdcall SetPalette(
         const uint8_t* paletteIndexes,
         const uint8_t* paletteColors,
         uint32_t paletteSize
     );
 
-    HRESULT __stdcall FinishScreenUpdate();
+    IRESULT __stdcall FinishScreenUpdate();
 
-    HRESULT __stdcall TryGetNextInputEvent(
+    IRESULT __stdcall TryGetNextInputEvent(
         IGraphicsWndInputEvent** evt);
 
 private:
@@ -75,10 +75,11 @@ private:
     void InitShaders();
     void InitGeometry();
 
+    std::atomic<int32_t> refCounter = 1;
+
     std::vector<uint8_t> cpuVideoBuf;
     uint32_t cpuVideoBufPitch = 0;
     uint32_t cpuVideoBufHeight = 0;
-    std::atomic<ULONG> refCounter = 1;
 
     Dx11Device dxDev;
     Window wnd;

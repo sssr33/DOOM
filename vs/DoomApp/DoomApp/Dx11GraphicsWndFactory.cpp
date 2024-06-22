@@ -9,18 +9,18 @@ InterfacePtr<Dx11GraphicsWndFactory> Dx11GraphicsWndFactory::Make() {
     return InterfacePtr<Dx11GraphicsWndFactory>(new Dx11GraphicsWndFactory, DoNotAddRefKey{});
 }
 
-HRESULT __stdcall Dx11GraphicsWndFactory::QueryInterface(
-    const IID* riid,
+IRESULT __stdcall Dx11GraphicsWndFactory::QueryInterface(
+    const IGUID* guid,
     void** ppvObject)
 {
-    return E_NOINTERFACE;
+    return IRESULT_ERROR;
 }
 
-ULONG __stdcall Dx11GraphicsWndFactory::AddRef() {
+int32_t __stdcall Dx11GraphicsWndFactory::AddRef() {
     return ++this->refCounter;
 }
 
-ULONG __stdcall Dx11GraphicsWndFactory::Release() {
+int32_t __stdcall Dx11GraphicsWndFactory::Release() {
     auto refc = --this->refCounter;
 
     if (refc == 0) {
@@ -30,20 +30,20 @@ ULONG __stdcall Dx11GraphicsWndFactory::Release() {
     return refc;
 }
 
-HRESULT __stdcall Dx11GraphicsWndFactory::CreateGraphicsWnd(
+IRESULT __stdcall Dx11GraphicsWndFactory::CreateGraphicsWnd(
     const char* implName, IGraphicsWnd** res)
 {
     if (!res) {
-        return E_POINTER;
+        return IRESULT_ERROR;
     }
 
     if (implName == Dx11GraphicsWndFactory::GraphicsImplName) {
         auto impl = Dx11GraphicsWnd::Make();
         *res = impl.detach();
-        return S_OK;
+        return IRESULT_OK;
     }
 
-    return HRESULT_FROM_WIN32(ERROR_CALL_NOT_IMPLEMENTED);
+    return IRESULT_ERROR;
 }
 
 Dx11GraphicsWndFactory::Dx11GraphicsWndFactory() {

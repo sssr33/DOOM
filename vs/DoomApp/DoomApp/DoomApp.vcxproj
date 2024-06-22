@@ -187,6 +187,7 @@
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowsThreadMessageQueue.h" />
     <ClInclude Include="Wrapper.h" />
+    <ClInclude Include="WrapperDoom.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DoomApp.cpp" />
@@ -201,6 +202,7 @@
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WindowsThreadMessageQueue.cpp" />
     <ClCompile Include="Wrapper.cpp" />
+    <ClCompile Include="WrapperDoom.c" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DoomCore\DoomCore.vcxproj">
