@@ -127,8 +127,15 @@ void I_ShutdownGraphics(void)
 //
 void I_StartFrame(void)
 {
-	// er?
+	// frame syncronous IO operations
+	if (graphicsWnd) {
+		IRESULT ir = IRESULT_OK;
 
+		ir = graphicsWnd->vtable->StartFrame(graphicsWnd);
+		if (IRESULT_FAILED(ir)) {
+			I_Error("graphicsWnd.StartFrame failed");
+		}
+	}
 }
 
 static int	lastmousex = 0;

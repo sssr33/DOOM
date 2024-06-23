@@ -11,6 +11,7 @@
 #include "Dx\Dx11Device.h"
 #include "Dx\Dx11HwndSwapChain.h"
 #include "Dx\CBuffer.h"
+#include "Input\Dx11GraphicsWndInputHandler.h"
 
 // for additional description see comments in IGraphicsWnd/IGraphicsWndVtbl
 class Dx11GraphicsWnd : public IGraphicsWnd {
@@ -40,6 +41,8 @@ public:
         const uint8_t* paletteColors,
         uint32_t paletteSize
     );
+
+    IRESULT __stdcall StartFrame();
 
     IRESULT __stdcall FinishScreenUpdate();
 
@@ -109,4 +112,6 @@ private:
     DoomBackBufferVSCBuffer vsCBufferData = {};
 
     Microsoft::WRL::ComPtr<ID3D11PixelShader> ps;
+
+    Dx11GraphicsWndInputHandler inputHandler;
 };

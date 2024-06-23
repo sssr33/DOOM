@@ -21,6 +21,8 @@
     <ClInclude Include="Dx\ShaderLoader.h" />
     <ClInclude Include="Dx\CBuffer.h" />
     <ClInclude Include="WrapperDoom.h" />
+    <ClInclude Include="Input\Dx11GraphicsWndInputEvent.h" />
+    <ClInclude Include="Input\Dx11GraphicsWndInputHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -36,6 +38,8 @@
     <ClCompile Include="HResultException.cpp" />
     <ClCompile Include="Dx\ShaderLoader.cpp" />
     <ClCompile Include="WrapperDoom.c" />
+    <ClCompile Include="Input\Dx11GraphicsWndInputEvent.cpp" />
+    <ClCompile Include="Input\Dx11GraphicsWndInputHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Dx\Shaders\DoomBackBufferVS.hlsl" />

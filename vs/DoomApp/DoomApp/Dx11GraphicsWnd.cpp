@@ -168,6 +168,12 @@ IRESULT __stdcall Dx11GraphicsWnd::SetPalette(
     return IRESULT_OK;
 }
 
+IRESULT __stdcall Dx11GraphicsWnd::StartFrame() {
+    this->wndMsgQueue.ProcessQueuedMessages();
+
+    return IRESULT_OK;
+}
+
 IRESULT __stdcall Dx11GraphicsWnd::FinishScreenUpdate() {
     try {
         // set flag only here to update doomBackBufferTex only when game says it's done drawing
@@ -188,9 +194,7 @@ IRESULT __stdcall Dx11GraphicsWnd::FinishScreenUpdate() {
 IRESULT __stdcall Dx11GraphicsWnd::TryGetNextInputEvent(
     IGraphicsWndInputEvent** evt)
 {
-    this->wndMsgQueue.ProcessQueuedMessages();
-
-    return IRESULT_OK;
+    return this->inputHandler.TryGetNextInputEvent(evt);
 }
 
 Dx11GraphicsWnd::Dx11GraphicsWnd()
@@ -257,6 +261,13 @@ LRESULT Dx11GraphicsWnd::WndProc(Window* window, HWND hwnd, UINT uMsg, WPARAM wP
             }
 
             return 0;
+        }
+        default: {
+            if (this->inputHandler.HandleInputEvent(uMsg, wParam, lParam)) {
+                return 0;
+            }
+
+            break;
         }
         }
     }
@@ -574,6 +585,7 @@ Dx11GraphicsWnd::VTable::VTable() {
     vtable_bind<&Dx11GraphicsWnd::InitializeScreen>(this->vtable.InitializeScreen);
     vtable_bind<&Dx11GraphicsWnd::GetCPUBackBuffer>(this->vtable.GetCPUBackBuffer);
     vtable_bind<&Dx11GraphicsWnd::SetPalette>(this->vtable.SetPalette);
+    vtable_bind<&Dx11GraphicsWnd::StartFrame>(this->vtable.StartFrame);
     vtable_bind<&Dx11GraphicsWnd::FinishScreenUpdate>(this->vtable.FinishScreenUpdate);
     vtable_bind<&Dx11GraphicsWnd::TryGetNextInputEvent>(this->vtable.TryGetNextInputEvent);
 }

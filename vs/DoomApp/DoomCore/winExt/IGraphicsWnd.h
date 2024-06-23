@@ -48,6 +48,10 @@ extern "C" {
             uint32_t paletteSize
         );
 
+        // frame syncronous IO operations
+        IRESULT(__stdcall* StartFrame)(
+            IGraphicsWnd* This);
+
         IRESULT(__stdcall* FinishScreenUpdate)(
             IGraphicsWnd* This);
 
