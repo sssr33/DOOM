@@ -1,5 +1,7 @@
 #include "Dx11GraphicsWndInputHandler.h"
 
+#include <string>
+
 bool Dx11GraphicsWndInputHandler::HandleInputEvent(UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (this->HandleMouseEvents(uMsg, wParam, lParam)) {
         return true;
