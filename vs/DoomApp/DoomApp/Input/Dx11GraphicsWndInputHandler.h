@@ -18,6 +18,7 @@ private:
     void CreateKeyEvent(bool isKeyUpEvent, WPARAM wParam, LPARAM lParam);
 
     static bool IsRightKey(LPARAM lParam);
+    static bool IsSysKeyAlt(WPARAM wParam, LPARAM lParam);
 
     std::queue<InterfacePtr<Dx11GraphicsWndInputEvent>> inputEvents;
 };

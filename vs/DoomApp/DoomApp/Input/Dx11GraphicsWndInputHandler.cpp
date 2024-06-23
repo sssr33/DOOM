@@ -43,20 +43,50 @@ bool Dx11GraphicsWndInputHandler::HandleMouseEvents(UINT uMsg, WPARAM wParam, LP
 }
 
 bool Dx11GraphicsWndInputHandler::HandleKeyEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    bool eventHandled = true;
+
+    auto OnKeyUp = [&]
+    {
+        this->CreateKeyEvent(true, wParam, lParam);
+    };
+    auto OnKeyDown = [&]
+    {
+        this->CreateKeyEvent(false, wParam, lParam);
+    };
+
     switch (uMsg) {
     case WM_KEYUP: {
-        this->CreateKeyEvent(true, wParam, lParam);
+        OnKeyUp();
         break;
     }
     case WM_KEYDOWN: {
-        this->CreateKeyEvent(false, wParam, lParam);
+        OnKeyDown();
+        break;
+    }
+    case WM_SYSKEYUP: {
+        if (IsSysKeyAlt(wParam, lParam)) {
+            OnKeyUp();
+        }
+        else {
+            eventHandled = false;
+        }
+        break;
+    }
+    case WM_SYSKEYDOWN: {
+        if (IsSysKeyAlt(wParam, lParam)) {
+            OnKeyDown();
+        }
+        else {
+            eventHandled = false;
+        }
         break;
     }
     default:
-        return false;
+        eventHandled = false;
+        break;
     }
 
-    return true;
+    return eventHandled;
 }
 
 void Dx11GraphicsWndInputHandler::CreateKeyEvent(bool isKeyUpEvent, WPARAM wParam, LPARAM lParam) {
@@ -134,4 +164,10 @@ bool Dx11GraphicsWndInputHandler::IsRightKey(LPARAM lParam) {
     }
 
     return false;
+}
+
+bool Dx11GraphicsWndInputHandler::IsSysKeyAlt(WPARAM wParam, LPARAM lParam) {
+    // https://www.reddit.com/r/learnprogramming/comments/nqrt4o/comment/h0d1te9/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+    bool isAlt = (HIWORD(lParam) && KF_ALTDOWN) || (wParam == VK_MENU);
+    return isAlt;
 }
