@@ -82,7 +82,7 @@ IRESULT xlatekey(IGraphicsWndInputEvent* inputEvt, const char** errStr, int* rc)
 	case GraphicsWndInputEventKey_ShiftRight: *rc = KEY_RSHIFT; break;
 	case GraphicsWndInputEventKey_CtrlLeft:
 	case GraphicsWndInputEventKey_CtrlRight: *rc = KEY_RCTRL; break;
-	case GraphicsWndInputEventKey_AltLeft:
+	case GraphicsWndInputEventKey_AltLeft: *rc = KEY_LALT; break;
 	case GraphicsWndInputEventKey_AltRight: *rc = KEY_RALT; break;
 	case GraphicsWndInputEventKey_Char:
 		ir = inputEvt->vtable->GetKeyChar(inputEvt, rc);
