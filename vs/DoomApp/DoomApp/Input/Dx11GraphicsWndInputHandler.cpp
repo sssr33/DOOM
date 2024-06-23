@@ -118,7 +118,8 @@ void Dx11GraphicsWndInputHandler::CreateKeyEvent(bool isKeyUpEvent, WPARAM wPara
         inputEvt->SetKey(key);
 
         if (key == GraphicsWndInputEventKey_Char) {
-            inputEvt->SetKeyChar(static_cast<int>(wParam));
+            // doom handles lower case
+            inputEvt->SetKeyChar(std::tolower(static_cast<int>(wParam)));
         }
 
         this->inputEvents.push(std::move(inputEvt));
