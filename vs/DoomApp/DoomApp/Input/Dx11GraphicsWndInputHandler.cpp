@@ -1,5 +1,7 @@
 #include "Dx11GraphicsWndInputHandler.h"
 
+#include <string>
+
 bool Dx11GraphicsWndInputHandler::HandleInputEvent(UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (this->HandleMouseEvents(uMsg, wParam, lParam)) {
         return true;
@@ -153,6 +155,127 @@ void Dx11GraphicsWndInputHandler::CreateKeyEvent(bool isKeyUpEvent, WPARAM wPara
         }
 
         this->inputEvents.push(std::move(inputEvt));
+
+        {
+            std::wstring str;
+
+            switch (key)
+            {
+            case GraphicsWndInputEventKey_None:
+                str = L"None";
+                break;
+            case GraphicsWndInputEventKey_Char:
+                str = L"Char";
+                break;
+            case GraphicsWndInputEventKey_Left:
+                str = L"Left";
+                break;
+            case GraphicsWndInputEventKey_Right:
+                str = L"Right";
+                break;
+            case GraphicsWndInputEventKey_Down:
+                str = L"Down";
+                break;
+            case GraphicsWndInputEventKey_Up:
+                str = L"Up";
+                break;
+            case GraphicsWndInputEventKey_Escape:
+                str = L"Escape";
+                break;
+            case GraphicsWndInputEventKey_Return:
+                str = L"Return";
+                break;
+            case GraphicsWndInputEventKey_Tab:
+                str = L"Tab";
+                break;
+            case GraphicsWndInputEventKey_F1:
+                str = L"F1";
+                break;
+            case GraphicsWndInputEventKey_F2:
+                str = L"F2";
+                break;
+            case GraphicsWndInputEventKey_F3:
+                str = L"F3";
+                break;
+            case GraphicsWndInputEventKey_F4:
+                str = L"F4";
+                break;
+            case GraphicsWndInputEventKey_F5:
+                str = L"F5";
+                break;
+            case GraphicsWndInputEventKey_F6:
+                str = L"F6";
+                break;
+            case GraphicsWndInputEventKey_F7:
+                str = L"F7";
+                break;
+            case GraphicsWndInputEventKey_F8:
+                str = L"F8";
+                break;
+            case GraphicsWndInputEventKey_F9:
+                str = L"F9";
+                break;
+            case GraphicsWndInputEventKey_F10:
+                str = L"F10";
+                break;
+            case GraphicsWndInputEventKey_F11:
+                str = L"F11";
+                break;
+            case GraphicsWndInputEventKey_F12:
+                str = L"F12";
+                break;
+            case GraphicsWndInputEventKey_BackSpace:
+                str = L"BackSpace";
+                break;
+            case GraphicsWndInputEventKey_Delete:
+                str = L"Delete";
+                break;
+            case GraphicsWndInputEventKey_Pause:
+                str = L"Pause";
+                break;
+            case GraphicsWndInputEventKey_Equal:
+                str = L"Equal";
+                break;
+            case GraphicsWndInputEventKey_Subtract:
+                str = L"Subtract";
+                break;
+            case GraphicsWndInputEventKey_ShiftLeft:
+                str = L"ShiftLeft";
+                break;
+            case GraphicsWndInputEventKey_ShiftRight:
+                str = L"ShiftRight";
+                break;
+            case GraphicsWndInputEventKey_CtrlLeft:
+                str = L"CtrlLeft";
+                break;
+            case GraphicsWndInputEventKey_CtrlRight:
+                str = L"CtrlRight";
+                break;
+            case GraphicsWndInputEventKey_AltLeft:
+                str = L"AltLeft";
+                break;
+            case GraphicsWndInputEventKey_AltRight:
+                str = L"AltRight";
+                break;
+            default:
+                break;
+            }
+
+            std::wstring upOrDownStr = isKeyUpEvent ? L"UP" : L"DOWN";
+
+            if (key == GraphicsWndInputEventKey_Char) {
+                str = static_cast<wchar_t>(wParam);
+            }
+
+            std::wstring msg = std::wstring()
+                + upOrDownStr
+                + L" "
+                + str
+                + L"\n"
+                ;
+
+            OutputDebugStringW(msg.c_str());
+        }
     }
 }
 
