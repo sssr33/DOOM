@@ -45,6 +45,7 @@ IRESULT __stdcall Dx11GraphicsWnd::InitializeScreen(
     }
 
     this->cpuVideoBufPitch = static_cast<uint32_t>(width * (bitDepth / 8));
+    this->cpuVideoBufWidth = static_cast<uint32_t>(width);
     this->cpuVideoBufHeight = static_cast<uint32_t>(height);
     this->cpuVideoBuf.resize(this->cpuVideoBufPitch * this->cpuVideoBufHeight);
 
@@ -218,6 +219,8 @@ Dx11GraphicsWnd::Dx11GraphicsWnd()
 {
     this->vtable = VTable::Instance().GetVTable();
 
+    DirectX::XMStoreFloat4x4(&this->windowToGamePosTransform, DirectX::XMMatrixIdentity());
+
     this->wnd.SetCustomWndProcHandler(
         std::bind(
             &Dx11GraphicsWnd::WndProc,
@@ -250,6 +253,20 @@ Dx11GraphicsWnd::Dx11GraphicsWnd()
             this->globalMouseCoords.y += move.y;
 
             return this->globalMouseCoords;
+
+            /*DirectX::XMMATRIX xmWindowToGamePosTransform = DirectX::XMLoadFloat4x4(&this->windowToGamePosTransform);
+            DirectX::XMVECTOR xmWindowCoords = DirectX::XMLoadSInt2(&windowCoords);
+
+            auto xmGameCoords = DirectX::XMVector2Transform(
+                xmWindowCoords,
+                xmWindowToGamePosTransform
+            );
+
+            DirectX::XMINT2 gameCoords = {};
+
+            DirectX::XMStoreSInt2(&gameCoords, xmGameCoords);
+
+            return gameCoords;*/
         });
 
     this->InitDxResources();
@@ -512,6 +529,34 @@ void Dx11GraphicsWnd::UpdateMatrices() {
     DirectX::XMStoreFloat4x4(&this->vsCBufferData.model, DirectX::XMMatrixTranspose(modelMatrix));
 
     this->vsCBufferDataUpdated = true;
+
+    if (this->doomBackBufferTex) {
+        // update windowToGamePosTransform
+        // windowToGamePosTransform = inverse(modelMatrix * projMatrix * toScreen) * (modelMatrix * projMatrixWithDoomScreenSize * toScreenWithDoomScreenSize)
+
+        D3D11_TEXTURE2D_DESC texDesc = {};
+
+        this->doomBackBufferTex->GetDesc(&texDesc);
+
+        auto toScreen = MakeToScreenMatrix(d3dViewport);
+
+        auto doomViewport = d3dViewport;
+
+        doomViewport.Width = static_cast<float>(texDesc.Width);
+        doomViewport.Height = static_cast<float>(texDesc.Height);
+
+        float doomAspectRatio = doomViewport.Width / doomViewport.Height;
+        float doomProjWidth = doomAspectRatio * projHeight;
+
+        auto doomProjMatrix = DirectX::XMMatrixOrthographicLH(doomProjWidth, projHeight, 0.1f, 10.f);
+        auto doomToScreen = MakeToScreenMatrix(doomViewport);
+
+        auto xmWindowToGamePosTransform =
+            DirectX::XMMatrixInverse(nullptr, modelMatrix * projMatrix * toScreen) *
+            (modelMatrix * doomProjMatrix * doomToScreen);
+
+        DirectX::XMStoreFloat4x4(&this->windowToGamePosTransform, xmWindowToGamePosTransform);
+    }
 }
 
 void Dx11GraphicsWnd::InitDxResources() {
@@ -609,6 +654,21 @@ void Dx11GraphicsWnd::InitGeometry() {
     this->quadGeometryTopology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
     this->quadGeometryVertexCount = static_cast<UINT>(std::size(quadGeometry));
     this->quadGeometryVertexStride = static_cast<UINT>(sizeof(quadGeometry[0]));
+}
+
+DirectX::XMMATRIX Dx11GraphicsWnd::MakeToScreenMatrix(const D3D11_VIEWPORT& viewport) {
+    // taken from XMVector3Project
+    const float HalfViewportWidth = viewport.Width * 0.5f;
+    const float HalfViewportHeight = viewport.Height * 0.5f;
+
+    DirectX::XMVECTOR scale = DirectX::XMVectorSet(HalfViewportWidth, -HalfViewportHeight, viewport.MaxDepth - viewport.MinDepth, 1.0f);
+    DirectX::XMVECTOR offset = DirectX::XMVectorSet(viewport.TopLeftX + HalfViewportWidth, viewport.TopLeftY + HalfViewportHeight, viewport.MinDepth, 0.0f);
+
+    auto toScreen =
+        DirectX::XMMatrixScalingFromVector(scale) *
+        DirectX::XMMatrixTranslationFromVector(offset);
+
+    return toScreen;
 }
 
 

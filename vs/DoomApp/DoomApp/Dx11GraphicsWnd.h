@@ -81,10 +81,13 @@ private:
     void InitShaders();
     void InitGeometry();
 
+    static DirectX::XMMATRIX MakeToScreenMatrix(const D3D11_VIEWPORT& viewport);
+
     std::atomic<int32_t> refCounter = 1;
 
     std::vector<uint8_t> cpuVideoBuf;
     uint32_t cpuVideoBufPitch = 0;
+    uint32_t cpuVideoBufWidth = 0;
     uint32_t cpuVideoBufHeight = 0;
 
     Dx11Device dxDev;
@@ -117,6 +120,7 @@ private:
     Microsoft::WRL::ComPtr<ID3D11PixelShader> ps;
 
     Dx11GraphicsWndInputHandler inputHandler;
+    DirectX::XMFLOAT4X4 windowToGamePosTransform;
     bool hasFocus = true;
     DirectX::XMINT2 globalMouseCoords = { 0, 0 };
 };
