@@ -178,8 +178,8 @@ IRESULT __stdcall Dx11GraphicsWnd::StartFrame() {
 
         POINT point;
 
-        point.x = d3dViewport.Width / 2;
-        point.y = d3dViewport.Height / 2;
+        point.x = static_cast<LONG>(d3dViewport.Width / 2);
+        point.y = static_cast<LONG>(d3dViewport.Height / 2);
 
         ClientToScreen(this->wnd.GetHwnd(), &point);
 
@@ -236,8 +236,8 @@ Dx11GraphicsWnd::Dx11GraphicsWnd()
             DirectX::XMINT2 center;
             const auto& d3dViewport = this->dxSwapChain.GetD3DViewport();
 
-            center.x = d3dViewport.Width / 2;
-            center.y = d3dViewport.Height / 2;
+            center.x = static_cast<int32_t>(d3dViewport.Width / 2);
+            center.y = static_cast<int32_t>(d3dViewport.Height / 2);
 
             DirectX::XMINT2 move;
 
