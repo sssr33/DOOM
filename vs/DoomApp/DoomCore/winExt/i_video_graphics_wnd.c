@@ -141,6 +141,7 @@ void I_StartFrame(void)
 static int	lastmousex = 0;
 static int	lastmousey = 0;
 boolean		mousemoved = false;
+static int	mouseButtonState = 0;
 
 IRESULT I_GetEvent_impl(IGraphicsWndInputEvent** inputEvt, const char** errStr, boolean* res) {
 	event_t event;
@@ -198,10 +199,13 @@ IRESULT I_GetEvent_impl(IGraphicsWndInputEvent** inputEvt, const char** errStr, 
 			*errStr = "inputEvt.GetMouseButton press failed";
 			return ir;
 		}
-		event.data1 =
+
+		mouseButtonState |=
 			(mouseButton == GraphicsWndInputEventMouseButton_Left ? 1 : 0)
 			| (mouseButton == GraphicsWndInputEventMouseButton_Right ? 2 : 0)
 			| (mouseButton == GraphicsWndInputEventMouseButton_Middle ? 4 : 0);
+
+		event.data1 = mouseButtonState;
 		event.data2 = event.data3 = 0;
 		D_PostEvent(&event);
 		// fprintf(stderr, "b");
@@ -213,10 +217,13 @@ IRESULT I_GetEvent_impl(IGraphicsWndInputEvent** inputEvt, const char** errStr, 
 			*errStr = "inputEvt.GetMouseButton release failed";
 			return ir;
 		}
-		event.data1 =
-			(mouseButton == GraphicsWndInputEventMouseButton_Left ? 1 : 0)
+
+		mouseButtonState &=
+			~((mouseButton == GraphicsWndInputEventMouseButton_Left ? 1 : 0)
 			| (mouseButton == GraphicsWndInputEventMouseButton_Right ? 2 : 0)
-			| (mouseButton == GraphicsWndInputEventMouseButton_Middle ? 4 : 0);
+			| (mouseButton == GraphicsWndInputEventMouseButton_Middle ? 4 : 0));
+
+		event.data1 = mouseButtonState;
 		event.data2 = event.data3 = 0;
 		D_PostEvent(&event);
 		// fprintf(stderr, "bu");
@@ -233,10 +240,7 @@ IRESULT I_GetEvent_impl(IGraphicsWndInputEvent** inputEvt, const char** errStr, 
 			*errStr = "inputEvt.GetMousePosition move failed";
 			return ir;
 		}
-		event.data1 =
-			(mouseButton == GraphicsWndInputEventMouseButton_Left ? 1 : 0)
-			| (mouseButton == GraphicsWndInputEventMouseButton_Right ? 2 : 0)
-			| (mouseButton == GraphicsWndInputEventMouseButton_Middle ? 4 : 0);
+		event.data1 = mouseButtonState;
 		event.data2 = (mouseX - lastmousex) << 2;
 		event.data3 = (lastmousey - mouseY) << 2;
 
