@@ -1,6 +1,7 @@
 #include "Dx11GraphicsWndInputHandler.h"
 
 #include <string>
+#include <windowsx.h>
 
 bool Dx11GraphicsWndInputHandler::HandleInputEvent(UINT uMsg, WPARAM wParam, LPARAM lParam) {
     if (this->HandleMouseEvents(uMsg, wParam, lParam)) {
@@ -30,18 +31,72 @@ IRESULT __stdcall Dx11GraphicsWndInputHandler::TryGetNextInputEvent(
     return IRESULT_OK;
 }
 
+void Dx11GraphicsWndInputHandler::SetWindowToGameCoords(WindowToGameCoordsFn windowToGameCoords) {
+    this->windowToGameCoords = std::move(windowToGameCoords);
+}
+
 bool Dx11GraphicsWndInputHandler::HandleMouseEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
-    /*switch (uMsg) {
-    case WM_MOUSEMOVE: {
+    bool eventHandled = false;
+    GraphicsWndInputEventType eventType = GraphicsWndInputEventType_None;
+    GraphicsWndInputEventMouseButton mouseButton = GraphicsWndInputEventMouseButton_None;
+
+    switch (uMsg) {
+    case WM_MOUSEMOVE:
+        eventType = GraphicsWndInputEventType_MouseMove;
+        break;
+    case WM_LBUTTONDOWN:
+        eventType = GraphicsWndInputEventType_MousePress;
+        mouseButton = GraphicsWndInputEventMouseButton_Left;
+        break;
+    case WM_LBUTTONUP:
+        eventType = GraphicsWndInputEventType_MouseRelease;
+        mouseButton = GraphicsWndInputEventMouseButton_Left;
+        break;
+    case WM_RBUTTONDOWN:
+        eventType = GraphicsWndInputEventType_MousePress;
+        mouseButton = GraphicsWndInputEventMouseButton_Right;
+        break;
+    case WM_RBUTTONUP:
+        eventType = GraphicsWndInputEventType_MouseRelease;
+        mouseButton = GraphicsWndInputEventMouseButton_Right;
+        break;
+    case WM_MBUTTONDOWN:
+        eventType = GraphicsWndInputEventType_MousePress;
+        mouseButton = GraphicsWndInputEventMouseButton_Middle;
+        break;
+    case WM_MBUTTONUP:
+        eventType = GraphicsWndInputEventType_MouseRelease;
+        mouseButton = GraphicsWndInputEventMouseButton_Middle;
         break;
     }
-    default:
-        return false;
-    }*/
 
-    //return true;
+    if (eventType != GraphicsWndInputEventType_None) {
+        eventHandled = true;
 
-    return false;
+        DirectX::XMINT2 windowPos = {
+            GET_X_LPARAM(lParam),
+            GET_Y_LPARAM(lParam)
+        };
+
+        DirectX::XMINT2 gamePos;
+
+        if (this->windowToGameCoords) {
+            gamePos = this->windowToGameCoords(windowPos);
+        }
+        else {
+            gamePos = windowPos;
+        }
+
+        auto inputEvt = Dx11GraphicsWndInputEvent::Make();
+
+        inputEvt->SetEventType(eventType);
+        inputEvt->SetMouseButton(mouseButton);
+        inputEvt->SetMousePosition(gamePos.x, gamePos.y);
+
+        this->inputEvents.push(std::move(inputEvt));
+    }
+
+    return eventHandled;
 }
 
 bool Dx11GraphicsWndInputHandler::HandleKeyEvents(UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -92,7 +147,7 @@ bool Dx11GraphicsWndInputHandler::HandleKeyEvents(UINT uMsg, WPARAM wParam, LPAR
 }
 
 void Dx11GraphicsWndInputHandler::CreateKeyEvent(bool isKeyUpEvent, WPARAM wParam, LPARAM lParam) {
-    GraphicsWndInputEventType evtType = isKeyUpEvent ? GraphicsWndInputEventType_KeyRelease : GraphicsWndInputEventType_KeyPress;
+    GraphicsWndInputEventType eventType = isKeyUpEvent ? GraphicsWndInputEventType_KeyRelease : GraphicsWndInputEventType_KeyPress;
     GraphicsWndInputEventKey key = GraphicsWndInputEventKey_None;
 
     switch (wParam) {
@@ -146,7 +201,7 @@ void Dx11GraphicsWndInputHandler::CreateKeyEvent(bool isKeyUpEvent, WPARAM wPara
     if (key != GraphicsWndInputEventKey_None) {
         auto inputEvt = Dx11GraphicsWndInputEvent::Make();
 
-        inputEvt->SetEventType(evtType);
+        inputEvt->SetEventType(eventType);
         inputEvt->SetKey(key);
 
         if (key == GraphicsWndInputEventKey_Char) {
