@@ -63,6 +63,9 @@ private:
     };
 
     Dx11GraphicsWnd();
+    // do not copy or move because inputHandler captures this
+    Dx11GraphicsWnd(const Dx11GraphicsWnd&) = delete;
+    Dx11GraphicsWnd(Dx11GraphicsWnd&&) = delete;
 
     LRESULT WndProc(Window* window, HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -114,4 +117,6 @@ private:
     Microsoft::WRL::ComPtr<ID3D11PixelShader> ps;
 
     Dx11GraphicsWndInputHandler inputHandler;
+    bool hasFocus = true;
+    DirectX::XMINT2 globalMouseCoords = { 0, 0 };
 };

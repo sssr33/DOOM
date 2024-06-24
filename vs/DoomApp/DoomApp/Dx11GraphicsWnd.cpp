@@ -171,6 +171,21 @@ IRESULT __stdcall Dx11GraphicsWnd::SetPalette(
 IRESULT __stdcall Dx11GraphicsWnd::StartFrame() {
     this->wndMsgQueue.ProcessQueuedMessages();
 
+    if (this->hasFocus) {
+        // set cursor to window center to keep rceive mouse deltas from center
+        // This allows to use mouse for moving camera in windowed mode without directinput or other similar apis
+        const auto& d3dViewport = this->dxSwapChain.GetD3DViewport();
+
+        POINT point;
+
+        point.x = d3dViewport.Width / 2;
+        point.y = d3dViewport.Height / 2;
+
+        ClientToScreen(this->wnd.GetHwnd(), &point);
+
+        SetCursorPos(point.x, point.y);
+    }
+
     return IRESULT_OK;
 }
 
@@ -214,6 +229,28 @@ Dx11GraphicsWnd::Dx11GraphicsWnd()
             std::placeholders::_5
         )
     );
+
+    this->inputHandler.SetWindowToGameCoords(
+        [this](const DirectX::XMINT2& windowCoords)
+        {
+            DirectX::XMINT2 center;
+            const auto& d3dViewport = this->dxSwapChain.GetD3DViewport();
+
+            center.x = d3dViewport.Width / 2;
+            center.y = d3dViewport.Height / 2;
+
+            DirectX::XMINT2 move;
+
+            move.x = windowCoords.x - center.x;
+            move.y = windowCoords.y - center.y;
+
+            // game calculates mouse delta movement so actual numbers should not matter
+            // Using window coords gives good sensitivity, so no need to transform to doom actual resolution
+            this->globalMouseCoords.x += move.x;
+            this->globalMouseCoords.y += move.y;
+
+            return this->globalMouseCoords;
+        });
 
     this->InitDxResources();
 }
@@ -262,6 +299,12 @@ LRESULT Dx11GraphicsWnd::WndProc(Window* window, HWND hwnd, UINT uMsg, WPARAM wP
 
             return 0;
         }
+        case WM_KILLFOCUS:
+            this->hasFocus = false;
+            break;
+        case WM_SETFOCUS:
+            this->hasFocus = true;
+            break;
         default: {
             if (this->inputHandler.HandleInputEvent(uMsg, wParam, lParam)) {
                 return 0;
@@ -429,7 +472,7 @@ void Dx11GraphicsWnd::UpdateDoomBackBufferTex() {
 void Dx11GraphicsWnd::UpdateMatrices() {
     const auto& d3dViewport = this->dxSwapChain.GetD3DViewport();
     float aspectRatio = d3dViewport.Width / d3dViewport.Height;
-    float projHeight = 2.f;
+    const float projHeight = 2.f;
     float projWidth = aspectRatio * projHeight;
 
     auto projMatrix = DirectX::XMMatrixOrthographicLH(projWidth, projHeight, 0.1f, 10.f);
